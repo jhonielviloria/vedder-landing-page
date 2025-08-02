@@ -112,15 +112,15 @@ const Footer = () => {
             <div className="contact-info">
               <div className="contact-item">
                 <MapPin size={16} />
-                <span>123 Business Boulevard<br />Downtown, ST 12345</span>
+                <span>51-53 Malcolm Place<br />Campbellfield VIC 3061</span>
               </div>
               <div className="contact-item">
                 <Phone size={16} />
-                <span>+1 (555) 123-4567</span>
+                <span>(03) 9357 9166</span>
               </div>
               <div className="contact-item">
                 <Mail size={16} />
-                <span>info@veddersanitary.com</span>
+                <span>info@vedder.com.au</span>
               </div>
             </div>
           </div>

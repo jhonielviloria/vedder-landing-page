@@ -25,7 +25,7 @@ const Hero = () => {
             
             <p className="hero-description">
               Vedder Sanitary Services specializes in providing premium sanitary bin solutions 
-              for businesses and facilities. From feminine hygiene disposal to general waste 
+              for businesses and facilities. From feminine hygiene disposal to Medical waste 
               management, we offer comprehensive bin services with regular maintenance.
             </p>
             

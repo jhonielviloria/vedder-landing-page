@@ -24,9 +24,12 @@ const Navbar = ({ cartItemCount, onCartToggle }) => {
       <div className="container">
         <div className="nav-content">
           <div className="nav-brand">
-            <h3 style={{ color: 'var(--primary-blue)', margin: 0 }}>
-              Vedder Sanitary Services
-            </h3>
+            <img 
+              src="https://www.vedder.com.au/wp-content/themes/vedder/img/logo.png"
+              alt="Vedder Sanitary Services" 
+              className="nav-logo"
+              onClick={() => scrollToSection('home')}
+            />
           </div>
 
           {/* Desktop Menu */}
@@ -116,6 +119,22 @@ const Navbar = ({ cartItemCount, onCartToggle }) => {
           align-items: center;
           justify-content: space-between;
           padding: 1rem 0;
+        }
+
+        .nav-brand {
+          display: flex;
+          align-items: center;
+        }
+
+        .nav-logo {
+          height: 50px;
+          width: auto;
+          cursor: pointer;
+          transition: transform 0.3s ease;
+        }
+
+        .nav-logo:hover {
+          transform: scale(1.05);
         }
 
         .desktop-menu {
@@ -221,8 +240,8 @@ const Navbar = ({ cartItemCount, onCartToggle }) => {
             display: flex;
           }
 
-          .nav-brand h3 {
-            font-size: 1.2rem;
+          .nav-logo {
+            height: 40px;
           }
         }
       `}</style>

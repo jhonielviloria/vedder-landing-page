@@ -154,9 +154,11 @@ src/
 
 ## 📞 Contact Information
 
-- **Phone**: +1 (555) 123-4567
-- **Email**: info@veddersanitary.com
-- **Address**: 123 Business Boulevard, Downtown, ST 12345
+- **Company**: Vedder Australia Pty Ltd
+- **Phone**: (03) 9357 9166
+- **Email**: info@vedder.com.au
+- **Address**: 51-53 Malcolm Place, Campbellfield VIC 3061
+- **Hours**: Monday-Friday 9am-5pm
 
 ## 🤝 Contributing
 

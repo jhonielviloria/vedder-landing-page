@@ -44,26 +44,26 @@ const Contact = () => {
     {
       icon: Mail,
       title: 'Email Us',
-      details: 'info@veddersanitary.com',
-      subDetails: 'support@veddersanitary.com'
+      details: 'info@vedder.com.au',
+      subDetails: 'Vedder Australia Pty Ltd'
     },
     {
       icon: Phone,
       title: 'Call Us',
-      details: '+1 (555) 123-4567',
-      subDetails: '+1 (555) 987-6543'
+      details: '(03) 9357 9166',
+      subDetails: 'Monday-Friday 9am-5pm'
     },
     {
       icon: MapPin,
       title: 'Visit Us',
-      details: '123 Business Boulevard',
-      subDetails: 'Downtown, ST 12345'
+      details: '51-53 Malcolm Place',
+      subDetails: 'Campbellfield VIC 3061'
     },
     {
       icon: Clock,
       title: 'Business Hours',
-      details: 'Mon - Fri: 8:00 AM - 6:00 PM',
-      subDetails: 'Sat: 9:00 AM - 4:00 PM'
+      details: 'Monday - Friday: 9:00 AM - 5:00 PM',
+      subDetails: 'Weekend: Closed'
     }
   ];
 
