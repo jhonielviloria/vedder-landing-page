@@ -5,51 +5,51 @@ const Partners = () => {
   const partners = [
     {
       id: 1,
-      name: 'CleanTech Industries',
-      type: 'Supplier Partner',
-      description: 'Premium cleaning product manufacturer',
+      name: 'Daniels Health',
+      type: 'Supplier Partner (Medical Waste)',
+      description: 'Leading provider of reusable sharps and clinical waste systems, reducing sharps injuries and plastics.',
       icon: Factory,
-      established: '2015'
-    },
-    {
-      id: 2,
-      name: 'Metro Commercial Group',
-      type: 'Corporate Client',
-      description: 'Large-scale commercial real estate',
-      icon: Building,
-      established: '2018'
-    },
-    {
-      id: 3,
-      name: 'EcoSafe Solutions',
-      type: 'Technology Partner',
-      description: 'Eco-friendly sanitary innovations',
-      icon: Store,
       established: '2020'
     },
     {
-      id: 4,
-      name: 'Professional Services Alliance',
-      type: 'Industry Network',
-      description: 'Regional cleaning services network',
-      icon: Users,
+      id: 2,
+      name: 'Ecomist',
+      type: 'Technology Partner (Hygiene Systems)',
+      description: 'Natural insect & odour dispensers with broad national coverage and hygiene solutions.',
+      icon: Store,
       established: '2019'
     },
     {
+      id: 3,
+      name: 'Sanokil',
+      type: 'Industry Network Partner (Hygiene Services)',
+      description: 'Extensive washroom hygiene services and sanitary bin management across Australia.',
+      icon: Users,
+      established: '2018'
+    },
+    {
+      id: 4,
+      name: 'BetterWaste',
+      type: 'Supplier Partner (Sustainable Waste)',
+      description: 'Sustainability‑focused waste recovery & recycling solutions.',
+      icon: Factory,
+      established: '2021'
+    },
+    {
       id: 5,
-      name: 'GreenClean Supply Co.',
-      type: 'Supplier Partner',
-      description: 'Sustainable cleaning supplies',
+      name: 'JJ\'s Waste & Recycling',
+      type: 'Supplier Partner (General Waste)',
+      description: 'Full‑service waste & recycling provider with deep national footprint and industry expertise.',
       icon: Factory,
       established: '2017'
     },
     {
       id: 6,
-      name: 'Downtown Business Center',
-      type: 'Corporate Client',
-      description: 'Multi-tenant office complex',
+      name: 'Argo Cleaning',
+      type: 'Hygiene / Cleaning Partner',
+      description: 'Commercial cleaning and facility hygiene specialists (pending detailed sourcing).',
       icon: Building,
-      established: '2021'
+      established: '2022'
     }
   ];
 
