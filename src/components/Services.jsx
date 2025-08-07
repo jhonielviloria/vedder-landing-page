@@ -1,54 +1,78 @@
 import React from 'react';
-import { Building2, Droplets, Package, Wind } from 'lucide-react';
+import { Building2, Droplets, Package, Wind, Trash2, ShieldCheck } from 'lucide-react';
 
 const Services = () => {
   const services = [
     {
       id: 1,
-      title: 'Office & Commercial Cleaning',
-      description: 'Comprehensive cleaning services for offices, retail spaces, and commercial facilities. We ensure your workspace remains spotless and professional.',
-      icon: Building2,
+      title: 'Sanitary & Disposal Services',
+      description: 'Comprehensive waste disposal and sanitary management solutions for all types of facilities.',
+      icon: Trash2,
       features: [
-        'Daily, weekly, or monthly schedules',
-        'Eco-friendly cleaning products',
-        'Fully insured and bonded staff',
-        'Customizable service packages'
+        'Sanitary Disposal Service',
+        'Nappy Disposal Service', 
+        'Sharps and Medical Waste Disposal Service',
+        'Regular collection schedules'
       ]
     },
     {
       id: 2,
-      title: 'Washroom Hygiene Maintenance',
-      description: 'Specialized washroom cleaning and maintenance services to ensure optimal hygiene standards and visitor satisfaction.',
+      title: 'Washroom Hygiene Solutions',
+      description: 'Complete washroom hygiene services including sanitizing, cleaning, and maintenance systems.',
       icon: Droplets,
       features: [
-        'Deep sanitization protocols',
-        'Supply and maintenance of dispensers',
-        'Regular quality inspections',
-        'Emergency response available'
+        'WC Sanitizing Service',
+        'Urinal Sanitizing Service',
+        'WC Deep Cleaning Service',
+        'Urinal Deep Cleaning Service'
       ]
     },
     {
       id: 3,
-      title: 'Restocking Services',
-      description: 'Keep your facilities fully stocked with essential supplies. We monitor, deliver, and restock all your sanitary products.',
+      title: 'Dispensing & Supply Services',
+      description: 'Professional dispensing systems and supply management for all your facility needs.',
       icon: Package,
       features: [
-        'Automated inventory monitoring',
-        'Scheduled deliveries',
-        'Bulk pricing discounts',
-        'Just-in-time restocking'
+        'Soap Dispensing Service',
+        'Feminine Hygiene Dispenser',
+        'Nappy Vending Machine',
+        'Anti-Bacterial Wipes Service'
       ]
     },
     {
       id: 4,
-      title: 'Odour Control Solutions',
-      description: 'Advanced odour control systems and treatments to maintain fresh, pleasant environments in any commercial space.',
+      title: 'Air Quality & Pest Control',
+      description: 'Advanced air freshening and pest control solutions to maintain pleasant, healthy environments.',
       icon: Wind,
       features: [
-        'Professional-grade air fresheners',
-        'Odour neutralization technology',
-        'Custom scent solutions',
-        'Long-lasting effectiveness'
+        'Air Freshener Service',
+        'Pyrethrum Insect Control',
+        'Odour neutralization systems',
+        'Custom scent solutions'
+      ]
+    },
+    {
+      id: 5,
+      title: 'Equipment & Infrastructure',
+      description: 'Supply, installation, and maintenance of essential washroom and hygiene equipment.',
+      icon: Building2,
+      features: [
+        'Baby Change Table',
+        'Hand Dryer Sales & Rental',
+        'Equipment installation',
+        'Maintenance & repair services'
+      ]
+    },
+    {
+      id: 6,
+      title: 'Specialized Hygiene Services',
+      description: 'Professional-grade hygiene solutions tailored for healthcare, commercial, and industrial facilities.',
+      icon: ShieldCheck,
+      features: [
+        'Medical waste compliance',
+        'Healthcare facility services',
+        'Industrial hygiene solutions',
+        'Custom service packages'
       ]
     }
   ];
@@ -57,10 +81,10 @@ const Services = () => {
     <section id="services" className="services section-padding">
       <div className="container">
         <div className="section-header text-center">
-          <h2>Our Services</h2>
+          <h2>Services & Products</h2>
           <p>
-            Professional sanitary services tailored to your business needs. 
-            From regular cleaning to specialized maintenance, we've got you covered.
+            Complete sanitary solutions for your business. From disposal services to specialized equipment, 
+            we provide everything you need to maintain the highest hygiene standards.
           </p>
         </div>
 
@@ -126,7 +150,7 @@ const Services = () => {
 
         .services-grid {
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+          grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
           gap: 2rem;
           margin-bottom: 4rem;
         }
