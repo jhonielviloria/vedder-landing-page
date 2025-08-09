@@ -432,7 +432,7 @@ p {
   min-height: 100vh;
   display: flex;
   align-items: center;
-  padding-top: 100px; /* Account for navbar height */
+  padding-top: 72px; /* Account for navbar height */
   padding-bottom: 80px;
   position: relative;
   overflow: hidden;
@@ -559,7 +559,7 @@ p {
 @media (max-width: 768px) {
   .hero {
     min-height: 90vh;
-    padding-top: 80px;
+  padding-top: 60px;
   }
 
   .hero-content {
