@@ -60,14 +60,16 @@ function App() {
         cartItemCount={getCartItemCount()} 
         onCartToggle={() => setIsCartOpen(!isCartOpen)} 
       />
-      <Hero />
-      <Bins />
-      <Products addToCart={addToCart} />
-      <Services />
-      <Testimonials />
-      <About />
-      <Partners />
-      <Contact />
+      <main id="main-content" role="main">
+        <Hero />
+        <Bins />
+        <Products addToCart={addToCart} />
+        <Services />
+        <Testimonials />
+        <About />
+        <Partners />
+        <Contact />
+      </main>
       <Footer />
       <Cart
         isOpen={isCartOpen}

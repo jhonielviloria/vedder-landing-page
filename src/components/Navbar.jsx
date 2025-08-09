@@ -20,7 +20,7 @@ const Navbar = ({ cartItemCount, onCartToggle }) => {
   };
 
   return (
-    <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
+    <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`} aria-label="Primary">
       <div className="container">
         <div className="nav-content">
           <div className="nav-brand">
@@ -28,34 +28,35 @@ const Navbar = ({ cartItemCount, onCartToggle }) => {
               src="https://www.vedder.com.au/wp-content/themes/vedder/img/logo.png"
               alt="Vedder Sanitary Services" 
               className="nav-logo"
+              loading="lazy"
               onClick={() => scrollToSection('home')}
             />
           </div>
 
           {/* Desktop Menu */}
-          <div className="nav-menu desktop-menu">
-            <button onClick={() => scrollToSection('home')} className="nav-link">
+          <div className="nav-menu desktop-menu" role="menubar" aria-label="Primary Navigation">
+            <button onClick={() => scrollToSection('home')} className="nav-link" role="menuitem">
               Home
             </button>
-            <button onClick={() => scrollToSection('bins')} className="nav-link">
+            <button onClick={() => scrollToSection('bins')} className="nav-link" role="menuitem">
               Our Bins
             </button>
-            <button onClick={() => scrollToSection('products')} className="nav-link">
+            <button onClick={() => scrollToSection('products')} className="nav-link" role="menuitem">
               Products
             </button>
-            <button onClick={() => scrollToSection('services')} className="nav-link">
+            <button onClick={() => scrollToSection('services')} className="nav-link" role="menuitem">
               Services
             </button>
-            <button onClick={() => scrollToSection('about')} className="nav-link">
+            <button onClick={() => scrollToSection('about')} className="nav-link" role="menuitem">
               About
             </button>
-            <button onClick={() => scrollToSection('contact')} className="nav-link">
+            <button onClick={() => scrollToSection('contact')} className="nav-link" role="menuitem">
               Contact
             </button>
           </div>
 
           <div className="nav-actions">
-            <button className="cart-btn" onClick={onCartToggle}>
+            <button className="cart-btn" onClick={onCartToggle} aria-label="Open cart">
               <ShoppingCart size={20} />
               {cartItemCount > 0 && (
                 <span className="cart-badge">{cartItemCount}</span>
@@ -64,6 +65,7 @@ const Navbar = ({ cartItemCount, onCartToggle }) => {
             
             <button 
               className="mobile-menu-btn"
+              aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
               {isMenuOpen ? <X size={24} /> : <Menu size={24} />}

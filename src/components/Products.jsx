@@ -1,5 +1,5 @@
 import React from 'react';
-import { ShoppingCart, Star } from 'lucide-react';
+import { ShoppingCart } from 'lucide-react';
 
 const Products = ({ addToCart }) => {
   const products = [
@@ -8,8 +8,7 @@ const Products = ({ addToCart }) => {
       name: 'Premium Toilet Paper (24-Pack)',
       description: 'Ultra-soft 3-ply toilet paper for commercial and home use',
       price: 32.99,
-      image: '�',
-    //   rating: 4.8,
+  image: '🧻',
       category: 'Toilet Paper',
       inStock: true
     },
@@ -18,8 +17,7 @@ const Products = ({ addToCart }) => {
       name: 'Toilet Paper (12-Pack)',
       description: 'High-quality 2-ply toilet paper, perfect for everyday use',
       price: 18.99,
-      image: '�',
-    //   rating: 4.6,
+  image: '🧻',
       category: 'Toilet Paper',
       inStock: true
     },
@@ -29,7 +27,7 @@ const Products = ({ addToCart }) => {
       description: 'Sustainable bamboo toilet paper, environmentally conscious choice',
       price: 24.99,
       image: '🌿',
-    //   rating: 4.7,
+  // rating removed
       category: 'Eco-Friendly',
       inStock: true
     },
@@ -39,7 +37,7 @@ const Products = ({ addToCart }) => {
       description: 'Powerful disinfectant cleaner for toilets and urinals',
       price: 8.99,
       image: '🧽',
-    //   rating: 4.9,
+  // rating removed
       category: 'Cleaners',
       inStock: true
     },
@@ -48,8 +46,7 @@ const Products = ({ addToCart }) => {
       name: 'Toilet Seat Sanitizer',
       description: 'Antibacterial spray for toilet seat disinfection',
       price: 12.99,
-      image: '�',
-    //   rating: 4.8,
+  image: '🧴',
       category: 'Sanitizers',
       inStock: true
     },
@@ -59,7 +56,7 @@ const Products = ({ addToCart }) => {
       description: 'Biodegradable wet wipes safe for septic systems',
       price: 15.99,
       image: '💧',
-    //   rating: 4.5,
+  // rating removed
       category: 'Wipes',
       inStock: true
     },
@@ -68,8 +65,7 @@ const Products = ({ addToCart }) => {
       name: 'Toilet Brush & Holder Set',
       description: 'Durable toilet brush with hygienic storage holder',
       price: 19.99,
-      image: '�',
-    //   rating: 4.7,
+  image: '🪣',
       category: 'Accessories',
       inStock: true
     },
@@ -79,21 +75,13 @@ const Products = ({ addToCart }) => {
       description: 'Long-lasting bathroom air freshener with odor eliminator',
       price: 6.99,
       image: '🌸',
-    //   rating: 4.6,
+  // rating removed
       category: 'Air Care',
       inStock: true
     }
   ];
 
-  const renderStars = (rating) => {
-    return Array.from({ length: 5 }, (_, i) => (
-      <Star
-        key={i}
-        size={14}
-        className={i < Math.floor(rating) ? 'star-filled' : 'star-empty'}
-      />
-    ));
-  };
+  // ratings removed
 
   return (
     <section id="products" className="products section-padding">
@@ -119,12 +107,7 @@ const Products = ({ addToCart }) => {
                 <h3 className="product-name">{product.name}</h3>
                 <p className="product-description">{product.description}</p>
                 
-                {/* <div className="product-rating">
-                  <div className="stars">
-                    {renderStars(product.rating)}
-                  </div>
-                  <span className="rating-text">({product.rating})</span>
-                </div> */}
+                {/* ratings removed */}
                 
                 <div className="product-footer">
                   <div className="product-price">
@@ -254,31 +237,7 @@ const Products = ({ addToCart }) => {
           line-height: 1.5;
         }
 
-        .product-rating {
-          display: flex;
-          align-items: center;
-          gap: 0.5rem;
-          margin-bottom: 1.5rem;
-        }
-
-        .stars {
-          display: flex;
-          gap: 0.125rem;
-        }
-
-        .star-filled {
-          color: #fbbf24;
-          fill: currentColor;
-        }
-
-        .star-empty {
-          color: var(--neutral-300);
-        }
-
-        .rating-text {
-          font-size: 0.9rem;
-          color: var(--neutral-600);
-        }
+  /* ratings styles removed */
 
         .product-footer {
           display: flex;
