@@ -130,7 +130,21 @@ const Products = ({ addToCart }) => {
           {products.map((product) => (
             <div key={product.id} className="product-card">
               <div className="product-image">
-                <span className="product-emoji">{product.image}</span>
+                {(() => {
+                  const val = product.image;
+                  const isUrl = typeof val === 'string' && /^(https?:\/\/|data:image)/i.test(val);
+                  return isUrl ? (
+                    <img
+                      className="product-photo"
+                      src={val}
+                      alt={product.name}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  ) : (
+                    <span className="product-emoji">{val}</span>
+                  );
+                })()}
                 <div className="product-category">{product.category}</div>
                 {product.inStock && <div className="stock-badge">In Stock</div>}
               </div>
@@ -226,6 +240,15 @@ const Products = ({ addToCart }) => {
         .product-emoji {
           font-size: 4rem;
           display: block;
+        }
+
+        .product-photo {
+          width: 100%;
+          height: 180px;
+          object-fit: contain;
+          display: block;
+          margin: 0 auto;
+          filter: drop-shadow(0 8px 16px rgba(0,0,0,0.08));
         }
 
         .product-category {
@@ -342,6 +365,10 @@ const Products = ({ addToCart }) => {
           .products-grid {
             grid-template-columns: 1fr;
             gap: 1.5rem;
+          }
+
+          .product-photo {
+            height: 160px;
           }
 
           .product-footer {

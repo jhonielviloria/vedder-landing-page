@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Mail, Phone, MapPin, Clock, Send, CheckCircle } from 'lucide-react';
+import { supabase, supabaseEnabled } from '../lib/supabase';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -10,6 +11,8 @@ const Contact = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [error, setError] = useState('');
+  const [honeypot, setHoneypot] = useState(''); // basic anti-bot
 
   const handleInputChange = (e) => {
     setFormData({
@@ -20,24 +23,41 @@ const Contact = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
+    if (honeypot) return; // bot detected, silently ignore
+
+    // Basic validation
+    const emailOk = /.+@.+\..+/.test(formData.email);
+    if (!formData.name.trim()) return setError('Please enter your name.');
+    if (!emailOk) return setError('Please enter a valid email.');
+    if (!formData.subject) return setError('Please select a subject.');
+    if (formData.message.trim().length < 10) return setError('Please provide a bit more detail (min 10 characters).');
+
     setIsSubmitting(true);
-    
-    // Simulate form submission
-    setTimeout(() => {
+    try {
+      if (!supabaseEnabled || !supabase) {
+        setIsSubmitted(true);
+      } else {
+        const payload = {
+          name: formData.name.trim(),
+          email: formData.email.trim(),
+          subject: formData.subject,
+          message: formData.message.trim(),
+          page_url: typeof window !== 'undefined' ? window.location.href : null,
+          user_agent: typeof navigator !== 'undefined' ? navigator.userAgent : null,
+        };
+        const { error: dbError } = await supabase.from('contact_messages').insert(payload);
+        if (dbError) throw dbError;
+        setIsSubmitted(true);
+      }
+
+      setFormData({ name: '', email: '', subject: '', message: '' });
+      setTimeout(() => setIsSubmitted(false), 5000);
+    } catch (err) {
+      setError(err.message || 'Failed to send your message. Please try again.');
+    } finally {
       setIsSubmitting(false);
-      setIsSubmitted(true);
-      setFormData({
-        name: '',
-        email: '',
-        subject: '',
-        message: ''
-      });
-      
-      // Reset success message after 5 seconds
-      setTimeout(() => {
-        setIsSubmitted(false);
-      }, 5000);
-    }, 1500);
+    }
   };
 
   const contactInfo = [
@@ -134,6 +154,11 @@ const Contact = () => {
                   <span>Thank you! Your message has been sent successfully.</span>
                 </div>
               )}
+              {error && (
+                <div className="error-message" role="alert">
+                  {error}
+                </div>
+              )}
 
               <div className="form-row">
                 <div className="form-group">
@@ -196,6 +221,12 @@ const Contact = () => {
                   placeholder="Tell us about your sanitary bin requirements..."
                   rows="5"
                 ></textarea>
+              </div>
+
+              {/* Honeypot field (hidden from users) */}
+              <div style={{ position: 'absolute', left: '-9999px', height: 0, overflow: 'hidden' }} aria-hidden="true">
+                <label htmlFor="company">Company</label>
+                <input id="company" name="company" value={honeypot} onChange={(e) => setHoneypot(e.target.value)} />
               </div>
 
               <button 
@@ -368,6 +399,16 @@ const Contact = () => {
           padding: 1rem;
           border-radius: 0.5rem;
           margin-bottom: 1.5rem;
+          font-size: 0.9rem;
+        }
+
+        .error-message {
+          background: #fee2e2;
+          color: #991b1b;
+          padding: 0.85rem 1rem;
+          border-radius: 0.5rem;
+          margin-bottom: 1rem;
+          border: 1px solid #fecaca;
           font-size: 0.9rem;
         }
 
