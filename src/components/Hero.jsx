@@ -87,12 +87,14 @@ const Hero = () => {
         .hero-grid {
           display: grid;
           grid-template-columns: 1.25fr 0.75fr;
+          grid-template-areas: 'left right';
           align-items: center;
           gap: 3rem;
           padding: 4.5rem 0 2.5rem;
         }
 
         .hero-left {
+          grid-area: left;
           max-width: 720px;
         }
 
@@ -178,7 +180,7 @@ const Hero = () => {
         .star.half { opacity: 0.6; }
         .rating-text { margin-left: 0.25rem; font-weight: 600; color: #0f172a; }
 
-  .hero-right { position: relative; justify-self: end; max-width: 520px; width: 100%; }
+  .hero-right { position: relative; justify-self: end; max-width: 520px; width: 100%; grid-area: right; }
 
         .media-grid {
           display: grid;
@@ -256,7 +258,7 @@ const Hero = () => {
         .stat-badge .stat-label { font-size: 0.8rem; color: #cbd5e1; }
 
         @media (max-width: 1024px) {
-          .hero-grid { grid-template-columns: 1fr; gap: 2rem; padding: 4rem 0 1.75rem; }
+          .hero-grid { grid-template-columns: 1fr; grid-template-areas: 'left' 'right'; gap: 2rem; padding: 4rem 0 1.75rem; }
           .hero-right { justify-self: center; max-width: 520px; }
         }
 
