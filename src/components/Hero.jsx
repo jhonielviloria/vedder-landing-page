@@ -1,5 +1,9 @@
 import React from 'react';
 import { ArrowRight, Sparkles, CheckCircle2, Star, User } from 'lucide-react';
+import imgBlue from '../assets/images/sani_blue.jpg';
+import imgSensor from '../assets/images/sani_sensor.webp';
+import imgSlim from '../assets/images/sani_slim.jpg';
+import imgMini from '../assets/images/sani_mini.webp';
 
 const Hero = () => {
   const scrollToSection = (sectionId) => {
@@ -199,10 +203,10 @@ const Hero = () => {
           height: 180px;
         }
 
-        .image-1 { grid-column: 1 / 2; grid-row: 1 / 2; background-image: url('/images/sani_blue.jpg'); }
-  .image-2 { grid-column: 2 / 3; grid-row: 1 / 2; background-image: url('/images/sani_sensor.webp'); }
-  .image-3 { grid-column: 1 / 2; grid-row: 2 / 3; background-image: url('/images/sani_slim.jpg'); }
-  .image-4 { grid-column: 2 / 3; grid-row: 2 / 3; background-image: url('/images/sani_mini.webp'); }
+    .image-1 { grid-column: 1 / 2; grid-row: 1 / 2; background-image: url(${imgBlue}); }
+  .image-2 { grid-column: 2 / 3; grid-row: 1 / 2; background-image: url(${imgSensor}); }
+  .image-3 { grid-column: 1 / 2; grid-row: 2 / 3; background-image: url(${imgSlim}); }
+  .image-4 { grid-column: 2 / 3; grid-row: 2 / 3; background-image: url(${imgMini}); }
 
   /* Make image 2 and 3 portrait (taller) */
   .image-2, .image-3 { height: 240px; }
