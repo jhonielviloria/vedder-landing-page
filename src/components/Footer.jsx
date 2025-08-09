@@ -1,5 +1,5 @@
 import React from 'react';
-import { Facebook, Instagram, Linkedin, Mail, Phone, MapPin, ArrowUp } from 'lucide-react';
+import { Facebook, Instagram, Linkedin, ArrowUp } from 'lucide-react';
 
 const Footer = () => {
   const scrollToTop = () => {
@@ -107,23 +107,7 @@ const Footer = () => {
             </ul>
           </div>
 
-          <div className="footer-section">
-            <h4>Contact Info</h4>
-            <div className="contact-info">
-              <div className="contact-item">
-                <MapPin size={16} />
-                <span>51-53 Malcolm Place<br />Campbellfield VIC 3061</span>
-              </div>
-              <div className="contact-item">
-                <Phone size={16} />
-                <span>(03) 9357 9166</span>
-              </div>
-              <div className="contact-item">
-                <Mail size={16} />
-                <span>info@vedder.com.au</span>
-              </div>
-            </div>
-          </div>
+          {/* Contact Info removed as requested */}
         </div>
 
         <div className="footer-bottom">
@@ -153,7 +137,7 @@ const Footer = () => {
 
         .footer-content {
           display: grid;
-          grid-template-columns: 2fr 1fr 1fr 1fr 1.5fr;
+          grid-template-columns: 2fr 1fr 1fr 1fr 1fr; /* brand + 4 columns */
           gap: 3rem;
           padding: 4rem 0 2rem;
         }
@@ -234,25 +218,7 @@ const Footer = () => {
           color: var(--primary-blue);
         }
 
-        .contact-info {
-          display: flex;
-          flex-direction: column;
-          gap: 1rem;
-        }
-
-        .contact-item {
-          display: flex;
-          align-items: flex-start;
-          gap: 0.75rem;
-          color: rgba(255, 255, 255, 0.7);
-          font-size: 0.95rem;
-        }
-
-        .contact-item svg {
-          color: var(--primary-blue);
-          margin-top: 0.125rem;
-          flex-shrink: 0;
-        }
+  /* Contact info styles removed */
 
         .footer-bottom {
           border-top: 1px solid rgba(255, 255, 255, 0.1);
@@ -362,13 +328,7 @@ const Footer = () => {
             justify-content: center;
           }
 
-          .contact-info {
-            text-align: center;
-          }
-
-          .contact-item {
-            justify-content: center;
-          }
+          /* contact info responsive styles removed */
         }
       `}</style>
     </footer>
