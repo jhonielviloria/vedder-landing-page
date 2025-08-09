@@ -257,7 +257,7 @@ const Hero = () => {
 
         @media (max-width: 1024px) {
           .hero-grid { grid-template-columns: 1fr; gap: 2rem; padding: 4rem 0 1.75rem; }
-          .hero-right { order: -1; justify-self: center; max-width: 520px; }
+          .hero-right { justify-self: center; max-width: 520px; }
         }
 
         @media (max-width: 640px) {
