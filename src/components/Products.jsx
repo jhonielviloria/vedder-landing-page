@@ -1,8 +1,9 @@
 import React from 'react';
 import { ShoppingCart } from 'lucide-react';
+import { supabase, supabaseEnabled } from '../lib/supabase';
 
 const Products = ({ addToCart }) => {
-  const products = [
+  const fallbackProducts = [
     {
       id: 1,
       name: 'Premium Toilet Paper (24-Pack)',
@@ -81,6 +82,36 @@ const Products = ({ addToCart }) => {
     }
   ];
 
+  const [products, setProducts] = React.useState(fallbackProducts);
+  const [loading, setLoading] = React.useState(false);
+
+  React.useEffect(() => {
+    let active = true;
+    const load = async () => {
+      if (!supabaseEnabled) return; // keep fallback
+      setLoading(true);
+      const { data, error } = await supabase
+        .from('products')
+        .select('id, name, price, stock, image_url, description, category')
+        .order('id', { ascending: true });
+      if (!error && data && active) {
+        const mapped = data.map(p => ({
+          id: p.id,
+          name: p.name,
+          description: p.description || '',
+          price: Number(p.price),
+          image: p.image_url || '🧻',
+          category: p.category || 'General',
+          inStock: (typeof p.stock === 'number' ? p.stock > 0 : true),
+        }));
+        setProducts(mapped);
+      }
+      if (active) setLoading(false);
+    };
+    load();
+    return () => { active = false; };
+  }, []);
+
   // ratings removed
 
   return (
@@ -94,7 +125,8 @@ const Products = ({ addToCart }) => {
           </p>
         </div>
 
-        <div className="products-grid">
+  {loading && <p style={{ textAlign: 'center', marginBottom: '1rem' }}>Loading products…</p>}
+  <div className="products-grid">
           {products.map((product) => (
             <div key={product.id} className="product-card">
               <div className="product-image">
