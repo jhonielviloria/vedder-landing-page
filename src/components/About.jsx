@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Users, Award, Shield, Heart } from 'lucide-react';
 
 const About = () => {
@@ -20,10 +20,34 @@ const About = () => {
     }
   ];
 
+  useEffect(() => {
+    const elements = document.querySelectorAll('.about .reveal');
+    if (!('IntersectionObserver' in window)) {
+      // Fallback: show all if IO not supported
+      elements.forEach(el => el.classList.add('in-view'));
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in-view');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.2 }
+    );
+
+    elements.forEach(el => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <section id="about" className="about section-padding">
       <div className="container">
-        <div className="about-content">
+        <div className="about-content reveal">
           <div className="about-text">
             <div className="section-badge">
               <Users size={16} />
@@ -62,7 +86,7 @@ const About = () => {
         </div>
 
         <div className="values-section">
-          <div className="values-header text-center">
+          <div className="values-header text-center reveal">
             <h3>Our Core Promises</h3>
             <p>The three guarantees that set us apart</p>
           </div>
@@ -71,7 +95,11 @@ const About = () => {
             {values.map((value, index) => {
               const IconComponent = value.icon;
               return (
-                <div key={index} className="value-card">
+                <div
+                  key={index}
+                  className="value-card reveal"
+                  style={{ '--i': index }}
+                >
                   <div className="value-icon">
                     <IconComponent size={24} />
                   </div>
@@ -82,7 +110,7 @@ const About = () => {
             })}
           </div>
           
-          <div className="closing-statement text-center">
+          <div className="closing-statement text-center reveal" style={{ '--i': 3 }}>
             <p className="lead-text">
               When you choose Vedder, you're not just choosing a supplier — you're partnering with a team that's committed to quality, efficiency, and sustainability in everything we do.
             </p>
@@ -95,10 +123,33 @@ const About = () => {
           background: white;
         }
 
+        /* Reveal on scroll */
+        .reveal {
+          opacity: 0;
+          transform: translateY(16px);
+          filter: blur(4px);
+          transition: opacity 1400ms ease, transform 1400ms ease, filter 1400ms ease;
+          will-change: opacity, transform, filter;
+        }
+        .reveal.in-view {
+          opacity: 1;
+          transform: none;
+          filter: none;
+        }
+        /* Stagger for cards using CSS var --i set inline */
+        .values-grid .value-card {
+          transition-delay: calc(var(--i, 0) * 220ms);
+        }
+        .closing-statement.reveal { transition-delay: calc(var(--i, 0) * 220ms); }
+
         .about-content {
           max-width: 800px;
           margin: 0 auto 5rem;
           text-align: center;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .reveal { transition: none !important; opacity: 1 !important; transform: none !important; filter: none !important; }
         }
 
         .section-badge {
