@@ -83,7 +83,6 @@ const Contact = () => {
       icon: Clock,
       title: 'Business Hours',
       details: 'Monday - Friday: 9:00 AM - 5:00 PM',
-      subDetails: 'Weekend: Closed'
     }
   ];
 
@@ -111,6 +110,11 @@ const Contact = () => {
             <div className="contact-items">
               {contactInfo.map((item, index) => {
                 const IconComponent = item.icon;
+                const isEmail = item.title === 'Email Us';
+                const isVisit = item.title === 'Visit Us';
+                const isPhone = item.title === 'Call Us';
+                const mapQuery = isVisit ? `${item.details} ${item.subDetails || ''}`.trim() : '';
+                const telHref = isPhone ? `tel:${(item.details || '').replace(/[^+\d]/g, '')}` : null;
                 return (
                   <div key={index} className="contact-item">
                     <div className="contact-icon">
@@ -118,8 +122,48 @@ const Contact = () => {
                     </div>
                     <div className="contact-details">
                       <h4>{item.title}</h4>
-                      <p>{item.details}</p>
-                      <p className="sub-detail">{item.subDetails}</p>
+                      {isEmail ? (
+                        <p>
+                          <a className="contact-link" href={`mailto:${item.details}`}>{item.details}</a>
+                        </p>
+                      ) : isVisit ? (
+                        <>
+                          <p>
+                            <a
+                              className="contact-link"
+                              href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapQuery)}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              {item.details}
+                            </a>
+                          </p>
+                          {item.subDetails && (
+                            <p className="sub-detail">
+                              <a
+                                className="contact-link"
+                                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapQuery)}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                {item.subDetails}
+                              </a>
+                            </p>
+                          )}
+                        </>
+                      ) : isPhone ? (
+                        <>
+                          <p>
+                            <a className="contact-link" href={telHref}>{item.details}</a>
+                          </p>
+                          {item.subDetails && <p className="sub-detail">{item.subDetails}</p>}
+                        </>
+                      ) : (
+                        <>
+                          <p>{item.details}</p>
+                          {item.subDetails && <p className="sub-detail">{item.subDetails}</p>}
+                        </>
+                      )}
                     </div>
                   </div>
                 );
@@ -129,14 +173,14 @@ const Contact = () => {
             <div className="quick-actions">
               <h4>Quick Actions</h4>
               <div className="action-buttons">
-                <button className="btn btn-primary">
+                <a className="btn btn-primary" href="tel:+61393579166">
                   <Phone size={16} />
                   Call Now
-                </button>
-                <button className="btn btn-secondary">
+                </a>
+                <a className="btn btn-secondary" href="mailto:info@vedder.com.au">
                   <Mail size={16} />
                   Send Email
-                </button>
+                </a>
               </div>
             </div>
           </div>
@@ -333,6 +377,14 @@ const Contact = () => {
           color: var(--neutral-700);
           margin: 0.125rem 0;
           font-size: 0.95rem;
+        }
+
+        .contact-details .contact-link {
+          color: var(--primary-blue);
+          text-decoration: none;
+        }
+        .contact-details .contact-link:hover {
+          text-decoration: underline;
         }
 
         .sub-detail {
