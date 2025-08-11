@@ -2,6 +2,16 @@ import React from 'react';
 import { Building, Factory, Store, Users } from 'lucide-react';
 
 const Partners = () => {
+  // Auto-import all partner logo images placed in src/assets/partners
+  const logos = React.useMemo(() => {
+    const modules = import.meta.glob('../assets/partners/*.{png,jpg,jpeg,webp,svg}', { eager: true });
+    const items = Object.entries(modules).map(([path, mod]) => {
+      const src = mod && mod.default ? mod.default : undefined;
+      const name = path.split('/').pop()?.split('.')[0]?.replace(/[-_]/g, ' ') || 'Partner logo';
+      return src ? { src, name } : null;
+    }).filter(Boolean);
+    return items;
+  }, []);
   const partners = [
     {
       id: 1,
@@ -63,6 +73,23 @@ const Partners = () => {
             deliver exceptional sanitary services and products to our clients.
           </p>
         </div>
+
+        {logos.length > 0 && (
+          <div className="logos-marquee" aria-label="Partner logos">
+            <div className="logos-track">
+              {logos.concat(logos).map((logo, idx) => (
+                <div className="logo-item" key={`${logo.src}-${idx}`}>
+                  <img
+                    src={logo.src}
+                    alt={`${logo.name} logo`}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         <div className="partners-grid">
           {partners.map((partner) => {
@@ -136,6 +163,36 @@ const Partners = () => {
       <style jsx>{`
         .partners {
           background: var(--neutral-50);
+        }
+
+        /* Logos marquee */
+        .logos-marquee {
+          position: relative;
+          overflow: hidden;
+          margin: 0 0 2.5rem;
+          padding: 0.5rem 0;
+          mask-image: linear-gradient(to right, transparent 0, black 8%, black 92%, transparent 100%);
+          -webkit-mask-image: linear-gradient(to right, transparent 0, black 8%, black 92%, transparent 100%);
+        }
+
+        .logos-track {
+          display: flex;
+          align-items: center;
+          gap: 3rem;
+          width: max-content;
+          animation: marquee-scroll 28s linear infinite;
+        }
+
+        .logos-marquee:hover .logos-track { animation-play-state: paused; }
+
+        .logo-item { flex: 0 0 auto; opacity: 0.9; transition: opacity .2s ease, transform .2s ease; }
+        .logo-item:hover { opacity: 1; transform: translateY(-2px); }
+        .logo-item img { height: 40px; width: auto; display: block; filter: grayscale(100%); opacity: 0.9; }
+        .logo-item img:hover { filter: grayscale(0%); opacity: 1; }
+
+        @keyframes marquee-scroll {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
         }
 
         .section-header {
