@@ -33,7 +33,8 @@ const Contact = () => {
     if (!formData.subject) return setError('Please select a subject.');
     if (formData.message.trim().length < 10) return setError('Please provide a bit more detail (min 10 characters).');
 
-    setIsSubmitting(true);
+  if (isSubmitting) return; // guard double click
+  setIsSubmitting(true);
     try {
       if (!supabaseEnabled || !supabase) {
         setIsSubmitted(true);
@@ -54,7 +55,15 @@ const Contact = () => {
       setFormData({ name: '', email: '', subject: '', message: '' });
       setTimeout(() => setIsSubmitted(false), 5000);
     } catch (err) {
-      setError(err.message || 'Failed to send your message. Please try again.');
+      const msg = err?.message || '';
+      if (msg.includes("Could not find the table 'public.contact_messages'")) {
+        setError('Message service not fully set up yet. Please finish the Supabase table creation (contact_messages) and retry.');
+        // Developer hint in console
+        // eslint-disable-next-line no-console
+        console.error('[Contact] Missing table contact_messages. Run the provided SQL migration to create it. Raw error:', err);
+      } else {
+        setError(msg || 'Failed to send your message. Please try again.');
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -193,13 +202,13 @@ const Contact = () => {
               </div>
 
               {isSubmitted && (
-                <div className="success-message">
+                <div className="success-message" role="status" aria-live="polite">
                   <CheckCircle size={20} />
                   <span>Thank you! Your message has been sent successfully.</span>
                 </div>
               )}
               {error && (
-                <div className="error-message" role="alert">
+                <div className="error-message" role="alert" aria-live="assertive">
                   {error}
                 </div>
               )}
@@ -255,7 +264,7 @@ const Contact = () => {
 
               <div className="form-group">
                 <label htmlFor="message">Message *</label>
-                <textarea
+                  <textarea
                   id="message"
                   name="message"
                   value={formData.message}
@@ -263,8 +272,10 @@ const Contact = () => {
                   className="form-input form-textarea"
                   required
                   placeholder="Tell us about your sanitary bin requirements..."
-                  rows="5"
-                ></textarea>
+                    rows="5"
+                    maxLength={1000}
+                  ></textarea>
+                  <div className="char-counter" aria-live="off">{formData.message.trim().length}/1000 characters</div>
               </div>
 
               {/* Honeypot field (hidden from users) */}
@@ -276,7 +287,7 @@ const Contact = () => {
               <button 
                 type="submit" 
                 className="btn btn-primary submit-btn"
-                disabled={isSubmitting}
+                disabled={isSubmitting || isSubmitted}
               >
                 {isSubmitting ? (
                   <>
