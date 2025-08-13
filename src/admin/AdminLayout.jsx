@@ -18,6 +18,7 @@ export default function AdminLayout() {
           <NavLink to="/admin" end>Dashboard</NavLink>
           <NavLink to="/admin/products">Products</NavLink>
           <NavLink to="/admin/orders">Orders</NavLink>
+          <NavLink to="/admin/messages">Messages</NavLink>
         </nav>
         <button className="btn" onClick={onLogout}>Logout</button>
       </aside>
