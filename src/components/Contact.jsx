@@ -76,7 +76,7 @@ const Contact = () => {
     {
       icon: MapPin,
       title: 'Visit Us',
-      details: '51-53 Malcolm Place',
+      details: 'Unit 51/53 Malcolm Pl',
       subDetails: 'Campbellfield VIC 3061'
     },
     {
