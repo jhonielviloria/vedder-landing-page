@@ -1,15 +1,15 @@
 import React from 'react';
-import { Star, Quote } from 'lucide-react';
+import { Star } from 'lucide-react';
 
 const Testimonials = () => {
-  const testimonials = [
+  const topRowTestimonials = [
     {
       id: 1,
       name: 'Sarah Johnson',
       position: 'Facility Manager',
       company: 'TechCorp Solutions',
       rating: 5,
-      review: 'Vedder Sanitary Services has transformed our office cleanliness standards. Their attention to detail and professional approach is unmatched. Our employees love the fresh, clean environment.',
+      quote: 'Vedder has transformed our office cleanliness standards. Their attention to detail is unmatched.',
       avatar: '👩‍💼'
     },
     {
@@ -18,7 +18,7 @@ const Testimonials = () => {
       position: 'Operations Director',
       company: 'Retail Plus Inc.',
       rating: 5,
-      review: 'Outstanding service quality and reliability. They handle all our restroom maintenance and restocking needs seamlessly. Customer satisfaction has improved significantly since we started working with them.',
+      quote: 'Outstanding service quality and reliability. Customer satisfaction has improved significantly.',
       avatar: '👨‍💼'
     },
     {
@@ -27,17 +27,164 @@ const Testimonials = () => {
       position: 'HR Manager',
       company: 'Creative Studios',
       rating: 5,
-      review: 'The team is incredibly professional and their eco-friendly products align perfectly with our company values. The automatic restocking service is a game-changer for our busy office.',
+      quote: 'Professional team with eco-friendly products. The automatic restocking is a game-changer.',
       avatar: '👩‍🎨'
     },
     {
       id: 4,
       name: 'David Thompson',
       position: 'Building Owner',
-      company: 'Commercial Properties LLC',
-      rating: 4,
-      review: 'Reliable, thorough, and cost-effective. Vedder has been maintaining our commercial building for two years now. Tenants consistently praise the cleanliness and hygiene standards.',
+      company: 'Commercial Properties',
+      rating: 5,
+      quote: 'Reliable, thorough, and cost-effective. Tenants consistently praise the cleanliness standards.',
       avatar: '👨‍🏢'
+    },
+    {
+      id: 5,
+      name: 'Lisa Park',
+      position: 'Office Manager',
+      company: 'Medical Center',
+      rating: 5,
+      quote: 'Essential for our healthcare facility. They understand compliance and hygiene requirements perfectly.',
+      avatar: '👩‍⚕️'
+    },
+    {
+      id: 6,
+      name: 'James Wilson',
+      position: 'Restaurant Owner',
+      company: 'Wilson\'s Bistro',
+      rating: 5,
+      quote: 'Critical for food service. Their sanitary solutions keep us compliant and customers happy.',
+      avatar: '👨‍�'
+    },
+    {
+      id: 7,
+      name: 'Anna Mitchell',
+      position: 'School Principal',
+      company: 'Greenwood Elementary',
+      rating: 5,
+      quote: 'Keeping our school clean and safe for children is their priority. Excellent communication.',
+      avatar: '👩‍🏫'
+    },
+    {
+      id: 8,
+      name: 'Robert Kim',
+      position: 'Gym Owner',
+      company: 'FitLife Fitness',
+      rating: 4,
+      quote: 'High-traffic facility requires consistent service. They deliver every time without fail.',
+      avatar: '💪'
+    },
+    {
+      id: 9,
+      name: 'Maria Santos',
+      position: 'Hotel Manager',
+      company: 'Grand Plaza Hotel',
+      rating: 5,
+      quote: 'Guest satisfaction depends on cleanliness. Vedder helps us maintain 5-star standards.',
+      avatar: '🏨'
+    },
+    {
+      id: 10,
+      name: 'Tom Anderson',
+      position: 'Factory Supervisor',
+      company: 'Industrial Works',
+      rating: 5,
+      quote: 'Industrial hygiene is complex. Their expertise in workplace safety standards is invaluable.',
+      avatar: '🏭'
+    }
+  ];
+
+  const bottomRowTestimonials = [
+    {
+      id: 11,
+      name: 'Jennifer Lee',
+      position: 'Store Manager',
+      company: 'Fashion Retail Co.',
+      rating: 5,
+      quote: 'Clean retail environment attracts customers. Professional service with flexible scheduling.',
+      avatar: '👗'
+    },
+    {
+      id: 12,
+      name: 'Kevin O\'Brien',
+      position: 'Warehouse Manager',
+      company: 'Logistics Plus',
+      rating: 4,
+      quote: 'Large facility management made easy. Consistent quality across all our locations.',
+      avatar: '📦'
+    },
+    {
+      id: 13,
+      name: 'Rachel Green',
+      position: 'Dental Practice Owner',
+      company: 'Smile Dental',
+      rating: 5,
+      quote: 'Medical-grade cleanliness standards. They understand our infection control needs.',
+      avatar: '🦷'
+    },
+    {
+      id: 14,
+      name: 'Mark Williams',
+      position: 'Office Coordinator',
+      company: 'Law Firm Associates',
+      rating: 5,
+      quote: 'Professional appearance matters to clients. Vedder keeps our offices pristine.',
+      avatar: '⚖️'
+    },
+    {
+      id: 15,
+      name: 'Susan Taylor',
+      position: 'Event Coordinator',
+      company: 'Premier Events',
+      rating: 5,
+      quote: 'Event venues require quick turnarounds. Their rapid response service is exceptional.',
+      avatar: '🎉'
+    },
+    {
+      id: 16,
+      name: 'Chris Martinez',
+      position: 'Tech Startup CEO',
+      company: 'InnovateTech',
+      rating: 4,
+      quote: 'Modern workplace needs modern solutions. Their tech-forward approach fits our culture.',
+      avatar: '💻'
+    },
+    {
+      id: 17,
+      name: 'Diana Walsh',
+      position: 'Salon Owner',
+      company: 'Elegance Beauty',
+      rating: 5,
+      quote: 'Hygiene is everything in beauty services. They help us maintain premium standards.',
+      avatar: '💅'
+    },
+    {
+      id: 18,
+      name: 'Peter Chang',
+      position: 'Manufacturing Manager',
+      company: 'Precision Parts',
+      rating: 5,
+      quote: 'Clean manufacturing environment improves quality. Their industrial expertise shows.',
+      avatar: '🔧'
+    },
+    {
+      id: 19,
+      name: 'Ashley Brown',
+      position: 'Spa Director',
+      company: 'Wellness Retreat',
+      rating: 5,
+      quote: 'Relaxation requires cleanliness. They create the perfect environment for our guests.',
+      avatar: '🧘‍♀️'
+    },
+    {
+      id: 20,
+      name: 'Daniel Foster',
+      position: 'Pharmacy Manager',
+      company: 'HealthFirst Pharmacy',
+      rating: 5,
+      quote: 'Pharmaceutical cleanliness standards are strict. They exceed every requirement.',
+      avatar: '💊'
     }
   ];
 
@@ -45,11 +192,28 @@ const Testimonials = () => {
     return Array.from({ length: 5 }, (_, i) => (
       <Star
         key={i}
-        size={16}
+        size={14}
         className={i < rating ? 'star-filled' : 'star-empty'}
       />
     ));
   };
+
+  const TestimonialCard = ({ testimonial }) => (
+    <div className="testimonial-card">
+      <div className="card-header">
+        <div className="avatar">{testimonial.avatar}</div>
+        <div className="author-info">
+          <h4 className="name">{testimonial.name}</h4>
+          <p className="position">{testimonial.position}</p>
+          <p className="company">{testimonial.company}</p>
+        </div>
+      </div>
+      <div className="rating">
+        {renderStars(testimonial.rating)}
+      </div>
+      <blockquote className="quote">"{testimonial.quote}"</blockquote>
+    </div>
+  );
 
   return (
     <section id="testimonials" className="testimonials section-padding">
@@ -62,36 +226,24 @@ const Testimonials = () => {
           </p>
         </div>
 
-        <div className="testimonials-grid">
-          {testimonials.map((testimonial, index) => (
-            <div key={testimonial.id} className={`testimonial-card ${index === 0 ? 'featured' : ''}`}>
-              <div className="quote-icon">
-                <Quote size={24} />
-              </div>
-              
-              <div className="testimonial-rating">
-                <div className="stars">
-                  {renderStars(testimonial.rating)}
-                </div>
-                <span className="rating-text">({testimonial.rating}.0)</span>
-              </div>
-              
-              <blockquote className="testimonial-text">
-                "{testimonial.review}"
-              </blockquote>
-              
-              <div className="testimonial-author">
-                <div className="author-avatar">
-                  <span>{testimonial.avatar}</span>
-                </div>
-                <div className="author-info">
-                  <h4 className="author-name">{testimonial.name}</h4>
-                  <p className="author-position">{testimonial.position}</p>
-                  <p className="author-company">{testimonial.company}</p>
-                </div>
-              </div>
+        <div className="testimonials-marquee">
+          {/* Top row - scrolling left */}
+          <div className="marquee-row">
+            <div className="marquee-track marquee-left">
+              {[...topRowTestimonials, ...topRowTestimonials].map((testimonial, index) => (
+                <TestimonialCard key={`top-${testimonial.id}-${index}`} testimonial={testimonial} />
+              ))}
             </div>
-          ))}
+          </div>
+
+          {/* Bottom row - scrolling right */}
+          <div className="marquee-row">
+            <div className="marquee-track marquee-right">
+              {[...bottomRowTestimonials, ...bottomRowTestimonials].map((testimonial, index) => (
+                <TestimonialCard key={`bottom-${testimonial.id}-${index}`} testimonial={testimonial} />
+              ))}
+            </div>
+          </div>
         </div>
 
         <div className="testimonials-stats">
@@ -117,6 +269,7 @@ const Testimonials = () => {
       <style jsx>{`
         .testimonials {
           background: var(--neutral-50);
+          overflow: hidden;
         }
 
         .section-header {
@@ -134,21 +287,60 @@ const Testimonials = () => {
           color: var(--neutral-600);
         }
 
-        .testimonials-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-          gap: 2rem;
+        .testimonials-marquee {
           margin-bottom: 4rem;
+        }
+
+        .marquee-row {
+          margin-bottom: 2rem;
+          overflow: hidden;
+          white-space: nowrap;
+        }
+
+        .marquee-track {
+          display: inline-flex;
+          gap: 2rem;
+          animation-duration: 60s;
+          animation-timing-function: linear;
+          animation-iteration-count: infinite;
+        }
+
+        .marquee-left {
+          animation-name: scrollLeft;
+        }
+
+        .marquee-right {
+          animation-name: scrollRight;
+        }
+
+        @keyframes scrollLeft {
+          0% {
+            transform: translateX(0);
+          }
+          100% {
+            transform: translateX(-50%);
+          }
+        }
+
+        @keyframes scrollRight {
+          0% {
+            transform: translateX(-50%);
+          }
+          100% {
+            transform: translateX(0);
+          }
         }
 
         .testimonial-card {
           background: white;
           border-radius: 1rem;
-          padding: 2rem;
+          padding: 1.5rem;
           box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-          transition: all 0.3s ease;
-          position: relative;
           border: 1px solid var(--neutral-200);
+          width: 320px;
+          flex-shrink: 0;
+          white-space: normal;
+          transition: transform 0.3s ease;
         }
 
         .testimonial-card:hover {
@@ -156,78 +348,14 @@ const Testimonials = () => {
           box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15);
         }
 
-        .testimonial-card.featured {
-          background: linear-gradient(135deg, var(--light-blue) 0%, rgba(59, 130, 246, 0.05) 100%);
-          border-color: var(--primary-blue);
-          transform: scale(1.02);
-        }
-
-        .testimonial-card.featured::before {
-          content: 'Featured Review';
-          position: absolute;
-          top: -10px;
-          left: 50%;
-          transform: translateX(-50%);
-          background: var(--primary-blue);
-          color: white;
-          padding: 0.25rem 1rem;
-          border-radius: 1rem;
-          font-size: 0.8rem;
-          font-weight: 500;
-        }
-
-        .quote-icon {
-          position: absolute;
-          top: 1rem;
-          right: 1rem;
-          color: var(--primary-blue);
-          opacity: 0.3;
-        }
-
-        .testimonial-rating {
-          display: flex;
-          align-items: center;
-          gap: 0.5rem;
-          margin-bottom: 1.5rem;
-        }
-
-        .stars {
-          display: flex;
-          gap: 0.125rem;
-        }
-
-        .star-filled {
-          color: #fbbf24;
-          fill: currentColor;
-        }
-
-        .star-empty {
-          color: var(--neutral-300);
-        }
-
-        .rating-text {
-          font-size: 0.9rem;
-          color: var(--neutral-600);
-          font-weight: 500;
-        }
-
-        .testimonial-text {
-          font-size: 1rem;
-          line-height: 1.7;
-          color: var(--neutral-700);
-          margin: 0 0 2rem 0;
-          font-style: italic;
-          position: relative;
-          z-index: 1;
-        }
-
-        .testimonial-author {
+        .card-header {
           display: flex;
           align-items: center;
           gap: 1rem;
+          margin-bottom: 1rem;
         }
 
-        .author-avatar {
+        .avatar {
           width: 50px;
           height: 50px;
           background: var(--light-blue);
@@ -243,24 +371,47 @@ const Testimonials = () => {
           flex: 1;
         }
 
-        .author-name {
+        .name {
           font-size: 1rem;
           font-weight: 600;
           color: var(--neutral-900);
           margin: 0 0 0.25rem 0;
         }
 
-        .author-position {
-          font-size: 0.9rem;
+        .position {
+          font-size: 0.85rem;
           color: var(--primary-blue);
           margin: 0 0 0.125rem 0;
           font-weight: 500;
         }
 
-        .author-company {
-          font-size: 0.85rem;
+        .company {
+          font-size: 0.8rem;
           color: var(--neutral-600);
           margin: 0;
+        }
+
+        .rating {
+          display: flex;
+          gap: 0.125rem;
+          margin-bottom: 1rem;
+        }
+
+        .star-filled {
+          color: #fbbf24;
+          fill: currentColor;
+        }
+
+        .star-empty {
+          color: var(--neutral-300);
+        }
+
+        .quote {
+          font-size: 0.95rem;
+          line-height: 1.6;
+          color: var(--neutral-700);
+          margin: 0;
+          font-style: italic;
         }
 
         .testimonials-stats {
@@ -289,18 +440,20 @@ const Testimonials = () => {
           font-weight: 500;
         }
 
+        @media (prefers-reduced-motion: reduce) {
+          .marquee-track {
+            animation: none;
+          }
+        }
+
         @media (max-width: 768px) {
-          .testimonials-grid {
-            grid-template-columns: 1fr;
-            gap: 1.5rem;
-          }
-
           .testimonial-card {
-            padding: 1.5rem;
+            width: 280px;
+            padding: 1.25rem;
           }
 
-          .testimonial-card.featured {
-            transform: none;
+          .marquee-track {
+            animation-duration: 40s;
           }
 
           .testimonials-stats {
@@ -310,12 +463,6 @@ const Testimonials = () => {
 
           .stat-number {
             font-size: 2rem;
-          }
-        }
-
-        @media (min-width: 769px) and (max-width: 1024px) {
-          .testimonials-grid {
-            grid-template-columns: repeat(2, 1fr);
           }
         }
       `}</style>
