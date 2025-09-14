@@ -75,9 +75,9 @@ function App() {
               />
               <main id="main-content" role="main">
                 <Hero />
+                <Services />
                 <Bins />
                 <Products addToCart={addToCart} />
-                <Services />
                 <Testimonials />
                 <About />
                 <Partners />
