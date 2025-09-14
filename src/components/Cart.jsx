@@ -73,7 +73,11 @@ const Cart = ({ isOpen, onClose, items, onUpdateQuantity, onRemoveItem, total })
                     {items.map((item) => (
                       <div key={item.id} className="cart-item">
                         <div className="item-image">
-                          <span>{item.image}</span>
+                          {item.image && (item.image.startsWith('http') || item.image.startsWith('data:')) ? (
+                            <img src={item.image} alt={item.name} />
+                          ) : (
+                            <span>{item.image || '📦'}</span>
+                          )}
                         </div>
                         <div className="item-details">
                           <h4>{item.name}</h4>
@@ -374,6 +378,19 @@ const Cart = ({ isOpen, onClose, items, onUpdateQuantity, onRemoveItem, total })
           display: flex;
           align-items: center;
           justify-content: center;
+          font-size: 1.5rem;
+          overflow: hidden;
+          flex-shrink: 0;
+        }
+
+        .item-image img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          border-radius: 0.5rem;
+        }
+
+        .item-image span {
           font-size: 1.5rem;
         }
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { ArrowRight, Sparkles, CheckCircle2, Star, User } from 'lucide-react';
-import imgBlue from '../assets/images/sani_blue.jpg';
+import imgBlue from '../assets/images/sani_blue.png';
 import imgSensor from '../assets/images/sani_sensor.webp';
 import imgSlim from '../assets/images/sani_slim.jpg';
 import imgMini from '../assets/images/sani_mini.webp';
