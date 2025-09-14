@@ -10,29 +10,19 @@ const Services = () => {
       icon: Trash2,
       features: [
         'Sanitary Disposal Service',
-        'Nappy Disposal Service', 
-        'Sharps and Medical Waste Disposal Service',
-        'Regular collection schedules'
+        'Nappy Disposal Service',
+        'Regular collection schedules',
+        'Waste management compliance'
       ]
     },
     {
       id: 2,
       title: 'Washroom Hygiene Solutions',
-      description: 'Complete washroom hygiene services including sanitizing, cleaning, and maintenance systems.',
+      description: 'Complete washroom hygiene services including sanitizing, cleaning, dispensing systems and maintenance.',
       icon: Droplets,
       features: [
         'WC Sanitizing Service',
         'Urinal Sanitizing Service',
-        'WC Deep Cleaning Service',
-        'Urinal Deep Cleaning Service'
-      ]
-    },
-    {
-      id: 3,
-      title: 'Dispensing & Supply Services',
-      description: 'Professional dispensing systems and supply management for all your facility needs.',
-      icon: Package,
-      features: [
         'Soap Dispensing Service',
         'Feminine Hygiene Dispenser',
         'Nappy Vending Machine',
@@ -40,39 +30,15 @@ const Services = () => {
       ]
     },
     {
-      id: 4,
-      title: 'Air Quality & Pest Control',
-      description: 'Advanced air freshening and pest control solutions to maintain pleasant, healthy environments.',
-      icon: Wind,
-      features: [
-        'Air Freshener Service',
-        'Pyrethrum Insect Control',
-        'Odour neutralization systems',
-        'Custom scent solutions'
-      ]
-    },
-    {
-      id: 5,
-      title: 'Equipment & Infrastructure',
-      description: 'Supply, installation, and maintenance of essential washroom and hygiene equipment.',
-      icon: Building2,
-      features: [
-        'Baby Change Table',
-        'Hand Dryer Sales & Rental',
-        'Equipment installation',
-        'Maintenance & repair services'
-      ]
-    },
-    {
-      id: 6,
-      title: 'Specialized Hygiene Services',
-      description: 'Professional-grade hygiene solutions tailored for healthcare, commercial, and industrial facilities.',
+      id: 3,
+      title: 'Sharps and Medical Waste Disposal Service',
+      description: 'Specialized medical waste disposal services ensuring safe handling and regulatory compliance.',
       icon: ShieldCheck,
       features: [
-        'Medical waste compliance',
-        'Healthcare facility services',
-        'Industrial hygiene solutions',
-        'Custom service packages'
+        'Sharps container supply & collection',
+        'Medical waste disposal',
+        'Healthcare facility compliance',
+        'Safe disposal documentation'
       ]
     }
   ];
@@ -81,10 +47,9 @@ const Services = () => {
     <section id="services" className="services section-padding">
       <div className="container">
         <div className="section-header text-center">
-          <h2>Services & Products</h2>
+          <h2>Sanitary & Hygiene Services</h2>
           <p>
-            Complete sanitary solutions for your business. From disposal services to specialized equipment, 
-            we provide everything you need to maintain the highest hygiene standards.
+            Full-spectrum hygiene programs: disposal, washroom care, dispensing, and compliant waste handling—tailored to your facility.
           </p>
         </div>
 
