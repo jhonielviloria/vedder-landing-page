@@ -79,7 +79,8 @@ const Hero = () => {
         .hero-background {
           position: absolute;
           inset: 0;
-          background: radial-gradient(1200px 600px at 10% 0%, rgba(59,130,246,0.10), transparent 60%),
+          background: url('/background.jpg') center/cover fixed,
+                      radial-gradient(1200px 600px at 10% 0%, rgba(59,130,246,0.10), transparent 60%),
                       radial-gradient(1000px 500px at 90% 10%, rgba(16,185,129,0.10), transparent 60%);
           pointer-events: none;
         }
@@ -91,6 +92,8 @@ const Hero = () => {
           align-items: center;
           gap: 3rem;
           padding: 4.5rem 0 2.5rem;
+          position: relative;
+          z-index: 2;
         }
 
         .hero-left {
