@@ -4,6 +4,7 @@ import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Bins from './components/Bins';
 import Products from './components/Products';
+import Store from './components/Store';
 import Services from './components/Services';
 import Testimonials from './components/Testimonials';
 import About from './components/About';
@@ -19,7 +20,6 @@ import AdminOrdersPage from './admin-v2/Orders';
 import AdminLogin from './admin/AdminLogin';
 import ProtectedRoute from './admin/ProtectedRoute';
 import { AdminProvider } from './admin/AdminContext';
-import Store from './pages/Store';
 
 function App() {
   const [cartItems, setCartItems] = useState([]);
@@ -98,10 +98,32 @@ function App() {
           }
         />
 
+        <Route
+          path="/store"
+          element={
+            <>
+              <Navbar 
+                cartItemCount={getCartItemCount()} 
+                onCartToggle={() => setIsCartOpen(!isCartOpen)} 
+              />
+              <Store addToCart={addToCart} />
+              <Footer />
+              <Cart
+                isOpen={isCartOpen}
+                onClose={() => setIsCartOpen(false)}
+                items={cartItems}
+                onUpdateQuantity={updateQuantity}
+                onRemoveItem={removeFromCart}
+                total={getCartTotal()}
+              />
+            </>
+          }
+        />
+
         {/* Admin routes */}
         {/* New admin panel */}
         <Route path="/admin/*" element={
-            <AdminProvider>
+          <AdminProvider>
             <Layout>
               <Routes>
                 <Route path="login" element={<AdminLogin />} />
@@ -115,8 +137,7 @@ function App() {
           </AdminProvider>
         } />
 
-  <Route path="/store" element={<Store />} />
-  <Route path="*" element={<Navigate to="/" replace />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </div>
   );

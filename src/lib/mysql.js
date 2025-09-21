@@ -70,6 +70,11 @@ class MySQLClient {
   async getContactMessages(page = 1, limit = 20) {
     return this.request(`/contact-messages?page=${page}&limit=${limit}`);
   }
+
+  // Admin Stats API
+  async getAdminStats() {
+    return this.request('/admin/stats');
+  }
 }
 
 export const mysql = mysqlEnabled 

@@ -1,6 +1,5 @@
 import React from 'react';
 import { ShoppingCart } from 'lucide-react';
-import { Link } from 'react-router-dom';
 import { mysql, mysqlEnabled } from '../lib/mysql';
 
 const Products = ({ addToCart }) => {
@@ -125,7 +124,7 @@ const Products = ({ addToCart }) => {
 
   {loading && <p style={{ textAlign: 'center', marginBottom: '1rem' }}>Loading products…</p>}
   <div className="products-grid">
-    {products.slice(0, 8).map((product) => (
+          {products.slice(0, 8).map((product) => (
             <div key={product.id} className="product-card">
               <div className="product-image">
                 {(() => {
@@ -178,10 +177,10 @@ const Products = ({ addToCart }) => {
               Contact us for special pricing on bulk orders and commercial accounts. 
               We offer competitive rates for businesses and facilities.
             </p>
-              <div className="cta-actions">
-                <button className="btn btn-primary">Request Bulk Quote</button>
-                <Link to="/store" className="btn btn-secondary">View All Products</Link>
-              </div>
+            <div className="cta-actions">
+              <button className="btn btn-primary">Request Bulk Quote</button>
+              <a href="/store" className="btn btn-secondary">View All Products</a>
+            </div>
           </div>
         </div>
       </div>
