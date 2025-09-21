@@ -14,9 +14,9 @@ import Cart from './components/Cart';
 const AdminLayout = React.lazy(() => import('./admin/AdminLayout'));
 const AdminLogin = React.lazy(() => import('./admin/AdminLogin'));
 const AdminDashboard = React.lazy(() => import('./admin/AdminDashboard'));
-const AdminProducts = React.lazy(() => import('./admin/AdminProducts'));
+// const AdminProducts = React.lazy(() => import('./admin/AdminProducts'));
 const AdminOrders = React.lazy(() => import('./admin/AdminOrders'));
-const AdminMessages = React.lazy(() => import('./admin/AdminMessages'));
+const AdminMessages = React.lazy(() => import('./components/AdminMessages'));
 const ProtectedRoute = React.lazy(() => import('./admin/ProtectedRoute'));
 
 function App() {
@@ -113,7 +113,7 @@ function App() {
           }
         >
           <Route index element={<React.Suspense fallback={<div style={{padding:16}}>Loading…</div>}><AdminDashboard /></React.Suspense>} />
-          <Route path="products" element={<React.Suspense fallback={<div style={{padding:16}}>Loading…</div>}><AdminProducts /></React.Suspense>} />
+          {/* <Route path="products" element={<React.Suspense fallback={<div style={{padding:16}}>Loading…</div>}><AdminProducts /></React.Suspense>} /> */}
           <Route path="orders" element={<React.Suspense fallback={<div style={{padding:16}}>Loading…</div>}><AdminOrders /></React.Suspense>} />
           <Route path="messages" element={<React.Suspense fallback={<div style={{padding:16}}>Loading…</div>}><AdminMessages /></React.Suspense>} />
         </Route>

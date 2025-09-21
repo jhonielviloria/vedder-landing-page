@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Mail, Phone, MapPin, Clock, Send, CheckCircle } from 'lucide-react';
-import { supabase, supabaseEnabled } from '../lib/supabase';
+import { mysql, mysqlEnabled } from '../lib/mysql';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -36,19 +36,16 @@ const Contact = () => {
   if (isSubmitting) return; // guard double click
   setIsSubmitting(true);
     try {
-      if (!supabaseEnabled || !supabase) {
+      if (!mysqlEnabled || !mysql) {
         setIsSubmitted(true);
       } else {
         const payload = {
           name: formData.name.trim(),
           email: formData.email.trim(),
-          subject: formData.subject,
-          message: formData.message.trim(),
-          page_url: typeof window !== 'undefined' ? window.location.href : null,
-          user_agent: typeof navigator !== 'undefined' ? navigator.userAgent : null,
+          message: `Subject: ${formData.subject}\n\n${formData.message.trim()}`,
         };
-        const { error: dbError } = await supabase.from('contact_messages').insert(payload);
-        if (dbError) throw dbError;
+        const { error: dbError } = await mysql.createContactMessage(payload);
+        if (dbError) throw new Error(dbError);
         setIsSubmitted(true);
       }
 
@@ -56,14 +53,14 @@ const Contact = () => {
       setTimeout(() => setIsSubmitted(false), 5000);
     } catch (err) {
       const msg = err?.message || '';
-      if (msg.includes("Could not find the table 'public.contact_messages'")) {
-        setError('Message service not fully set up yet. Please finish the Supabase table creation (contact_messages) and retry.');
-        // Developer hint in console
-        // eslint-disable-next-line no-console
-        console.error('[Contact] Missing table contact_messages. Run the provided SQL migration to create it. Raw error:', err);
+      if (msg.includes('Failed to save message')) {
+        setError('Message service not fully set up yet. Please ensure the MySQL backend is running and configured.');
       } else {
-        setError(msg || 'Failed to send your message. Please try again.');
+        setError('Failed to send message. Please try again.');
       }
+      // Developer hint in console
+      // eslint-disable-next-line no-console
+      console.error('[Contact] MySQL error:', err);
     } finally {
       setIsSubmitting(false);
     }

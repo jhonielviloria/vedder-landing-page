@@ -1,6 +1,6 @@
 import React from 'react';
 import { ShoppingCart } from 'lucide-react';
-import { supabase, supabaseEnabled } from '../lib/supabase';
+import { mysql, mysqlEnabled } from '../lib/mysql';
 
 const Products = ({ addToCart }) => {
   const fallbackProducts = [
@@ -88,12 +88,9 @@ const Products = ({ addToCart }) => {
   React.useEffect(() => {
     let active = true;
     const load = async () => {
-      if (!supabaseEnabled) return; // keep fallback
+      if (!mysqlEnabled) return; // keep fallback
       setLoading(true);
-      const { data, error } = await supabase
-        .from('products')
-        .select('id, name, price, stock, image_url, description, category')
-        .order('id', { ascending: true });
+      const { data, error } = await mysql.getProducts();
       if (!error && data && active) {
         const mapped = data.map(p => ({
           id: p.id,

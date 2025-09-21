@@ -80,17 +80,6 @@ const Services = () => {
             );
           })}
         </div>
-
-        <div className="cta-section">
-          <div className="cta-card">
-            <h3>Ready to Get Started?</h3>
-            <p>Contact us today for a free consultation and customized service quote.</p>
-            <div className="cta-actions">
-              <button className="btn btn-primary">Get Free Quote</button>
-              <button className="btn btn-secondary">Schedule Consultation</button>
-            </div>
-          </div>
-        </div>
       </div>
 
       <style jsx>{`
