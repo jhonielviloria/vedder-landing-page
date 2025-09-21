@@ -11,14 +11,15 @@ import Partners from './components/Partners';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import Cart from './components/Cart';
-const AdminLayout = React.lazy(() => import('./admin/AdminLayout'));
-const AdminLogin = React.lazy(() => import('./admin/AdminLogin'));
-const AdminDashboard = React.lazy(() => import('./admin/AdminDashboard'));
-const AdminProducts = React.lazy(() => import('./admin/AdminProducts'));
-const AdminOrders = React.lazy(() => import('./admin/AdminOrders'));
-const AdminMessages = React.lazy(() => import('./components/AdminMessages'));
-const ProtectedRoute = React.lazy(() => import('./admin/ProtectedRoute'));
+import Layout from './admin-v2/Layout';
+import Dashboard from './admin-v2/Dashboard';
+import AdminProductsPage from './admin-v2/Products';
+import AdminMessagesPage from './admin-v2/Messages';
+import AdminOrdersPage from './admin-v2/Orders';
+import AdminLogin from './admin/AdminLogin';
+import ProtectedRoute from './admin/ProtectedRoute';
 import { AdminProvider } from './admin/AdminContext';
+import Store from './pages/Store';
 
 function App() {
   const [cartItems, setCartItems] = useState([]);
@@ -98,27 +99,24 @@ function App() {
         />
 
         {/* Admin routes */}
-        <Route
-          path="/admin/*"
-          element={
+        {/* New admin panel */}
+        <Route path="/admin/*" element={
             <AdminProvider>
-              <React.Suspense fallback={<div style={{padding:16}}>Loading admin…</div>}> 
-                <Routes>
-                  <Route path="login" element={<AdminLogin />} />
-                  <Route element={<ProtectedRoute><AdminLayout /></ProtectedRoute>}>
-                    <Route index element={<React.Suspense fallback={<div style={{padding:16}}>Loading…</div>}><AdminDashboard /></React.Suspense>} />
-                    <Route path="products" element={<React.Suspense fallback={<div style={{padding:16}}>Loading…</div>}><AdminProducts /></React.Suspense>} />
-                    <Route path="orders" element={<React.Suspense fallback={<div style={{padding:16}}>Loading…</div>}><AdminOrders /></React.Suspense>} />
-                    <Route path="messages" element={<React.Suspense fallback={<div style={{padding:16}}>Loading…</div>}><AdminMessages /></React.Suspense>} />
-                  </Route>
-                  <Route path="*" element={<Navigate to="/admin" replace />} />
-                </Routes>
-              </React.Suspense>
-            </AdminProvider>
-          }
-        />
+            <Layout>
+              <Routes>
+                <Route path="login" element={<AdminLogin />} />
+                <Route path="" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+                <Route path="products" element={<ProtectedRoute><AdminProductsPage /></ProtectedRoute>} />
+                <Route path="messages" element={<ProtectedRoute><AdminMessagesPage /></ProtectedRoute>} />
+                <Route path="orders" element={<ProtectedRoute><AdminOrdersPage /></ProtectedRoute>} />
+                <Route path="*" element={<Navigate to="/admin" replace />} />
+              </Routes>
+            </Layout>
+          </AdminProvider>
+        } />
 
-        <Route path="*" element={<Navigate to="/" replace />} />
+  <Route path="/store" element={<Store />} />
+  <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </div>
   );
