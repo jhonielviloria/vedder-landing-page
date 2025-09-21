@@ -18,6 +18,7 @@ const AdminProducts = React.lazy(() => import('./admin/AdminProducts'));
 const AdminOrders = React.lazy(() => import('./admin/AdminOrders'));
 const AdminMessages = React.lazy(() => import('./components/AdminMessages'));
 const ProtectedRoute = React.lazy(() => import('./admin/ProtectedRoute'));
+import { AdminProvider } from './admin/AdminContext';
 
 function App() {
   const [cartItems, setCartItems] = useState([]);
@@ -97,26 +98,25 @@ function App() {
         />
 
         {/* Admin routes */}
-        <Route path="/admin/login" element={
-          <React.Suspense fallback={<div style={{padding:16}}>Loading admin…</div>}> 
-            <AdminLogin />
-          </React.Suspense>
-        } />
         <Route
-          path="/admin"
+          path="/admin/*"
           element={
-            <React.Suspense fallback={<div style={{padding:16}}>Loading admin…</div>}> 
-              <ProtectedRoute>
-                <AdminLayout />
-              </ProtectedRoute>
-            </React.Suspense>
+            <AdminProvider>
+              <React.Suspense fallback={<div style={{padding:16}}>Loading admin…</div>}> 
+                <Routes>
+                  <Route path="login" element={<AdminLogin />} />
+                  <Route element={<ProtectedRoute><AdminLayout /></ProtectedRoute>}>
+                    <Route index element={<React.Suspense fallback={<div style={{padding:16}}>Loading…</div>}><AdminDashboard /></React.Suspense>} />
+                    <Route path="products" element={<React.Suspense fallback={<div style={{padding:16}}>Loading…</div>}><AdminProducts /></React.Suspense>} />
+                    <Route path="orders" element={<React.Suspense fallback={<div style={{padding:16}}>Loading…</div>}><AdminOrders /></React.Suspense>} />
+                    <Route path="messages" element={<React.Suspense fallback={<div style={{padding:16}}>Loading…</div>}><AdminMessages /></React.Suspense>} />
+                  </Route>
+                  <Route path="*" element={<Navigate to="/admin" replace />} />
+                </Routes>
+              </React.Suspense>
+            </AdminProvider>
           }
-        >
-          <Route index element={<React.Suspense fallback={<div style={{padding:16}}>Loading…</div>}><AdminDashboard /></React.Suspense>} />
-          <Route path="products" element={<React.Suspense fallback={<div style={{padding:16}}>Loading…</div>}><AdminProducts /></React.Suspense>} />
-          <Route path="orders" element={<React.Suspense fallback={<div style={{padding:16}}>Loading…</div>}><AdminOrders /></React.Suspense>} />
-          <Route path="messages" element={<React.Suspense fallback={<div style={{padding:16}}>Loading…</div>}><AdminMessages /></React.Suspense>} />
-        </Route>
+        />
 
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

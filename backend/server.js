@@ -123,6 +123,22 @@ app.get('/api/contact-messages', async (req, res) => {
   }
 });
 
+// Admin stats endpoint (lightweight aggregate counts)
+app.get('/api/admin/stats', async (req, res) => {
+  try {
+    const [[{ productCount }]] = await pool.query('SELECT COUNT(*) AS productCount FROM products');
+    const [[{ messageCount }]] = await pool.query('SELECT COUNT(*) AS messageCount FROM contact_messages');
+    res.json({
+      products: productCount,
+      messages: messageCount,
+      timestamp: new Date().toISOString()
+    });
+  } catch (error) {
+    console.error('Error fetching admin stats:', error);
+    res.status(500).json({ error: 'Failed to fetch stats' });
+  }
+});
+
 // Start server
 async function startServer() {
   // Test database connection

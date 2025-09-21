@@ -1,38 +1,21 @@
 import React from 'react';
-import { NavLink, Outlet, useNavigate } from 'react-router-dom';
-import { signOut } from 'firebase/auth';
-import { auth } from '../lib/firebase';
+import { Outlet } from 'react-router-dom';
+import Sidebar from './Sidebar';
+import Topbar from './Topbar';
 
 export default function AdminLayout() {
-  const navigate = useNavigate();
-  const onLogout = async () => {
-    await signOut(auth);
-    navigate('/admin/login');
-  };
-
+  const [collapsed, setCollapsed] = React.useState(false);
   return (
-    <div className="admin">
-      <aside className="admin-sidebar">
-        <h2>Admin</h2>
-        <nav>
-          <NavLink to="/admin" end>Dashboard</NavLink>
-          <NavLink to="/admin/products">Products</NavLink>
-          <NavLink to="/admin/orders">Orders</NavLink>
-          <NavLink to="/admin/messages">Messages</NavLink>
-        </nav>
-        <button className="btn" onClick={onLogout}>Logout</button>
-      </aside>
-      <main className="admin-content">
-        <Outlet />
-      </main>
-      <style jsx>{`
-        .admin { display: grid; grid-template-columns: 220px 1fr; min-height: 100vh; }
-        .admin-sidebar { background: #0f172a; color: white; padding: 1rem; display: flex; flex-direction: column; gap: 1rem; }
-        .admin-sidebar a { color: #cbd5e1; text-decoration: none; display: block; padding: 0.5rem 0; }
-        .admin-sidebar a.active { color: #fff; font-weight: 700; }
-        .admin-content { padding: 1.5rem; }
-        .btn { background: #ef4444; color: white; border: none; padding: 0.5rem 0.75rem; border-radius: 6px; cursor: pointer; }
-      `}</style>
+    <div className="min-h-screen w-full flex bg-gradient-to-br from-slate-100 via-slate-50 to-white text-slate-800">
+      <Sidebar collapsed={collapsed} onToggle={()=>setCollapsed(c=>!c)} />
+      <div className="flex-1 flex flex-col min-w-0">
+        <Topbar onToggleSidebar={()=>setCollapsed(c=>!c)} />
+        <main className="flex-1 w-full max-w-7xl mx-auto px-6 py-8 lg:py-10 lg:px-10">
+          <Outlet />
+        </main>
+        <footer className="mt-auto text-center text-[11px] py-4 text-slate-400 select-none">&copy; {new Date().getFullYear()} Admin Panel</footer>
+      </div>
     </div>
   );
 }
+

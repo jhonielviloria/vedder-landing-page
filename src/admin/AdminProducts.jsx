@@ -1,35 +1,14 @@
 import React from 'react';
-import { mysql, mysqlEnabled } from '../lib/mysql';
+import { useProducts } from './hooks/useProducts';
 
 const EMPTY = { id: null, name: '', category: '', price: '', stock: '', image_url: '', description: '' };
 
 export default function AdminProducts() {
-  const [products, setProducts] = React.useState([]);
+  const { items, loading, error, saving, refresh, createProduct, updateProduct, deleteProduct } = useProducts();
   const [form, setForm] = React.useState(EMPTY);
-  const [loading, setLoading] = React.useState(true);
-  const [saving, setSaving] = React.useState(false);
-  const [error, setError] = React.useState('');
   const [notice, setNotice] = React.useState('');
 
-  const load = async () => {
-    if (!mysqlEnabled || !mysql) {
-      setLoading(false);
-      setError('MySQL backend not configured. Add VITE_API_BASE_URL to .env.local and restart.');
-      return;
-    }
-    try {
-      setLoading(true); setError('');
-      const { data, error: apiErr } = await mysql.getProducts();
-      if (apiErr) throw new Error(apiErr);
-      setProducts(data || []);
-    } catch (e) {
-      console.error(e);
-      setError(e.message || 'Failed to load products');
-      setProducts([]);
-    } finally { setLoading(false); }
-  };
-
-  React.useEffect(() => { load(); }, []);
+  React.useEffect(() => { refresh(); }, [refresh]);
 
   const reset = () => { setForm(EMPTY); setNotice(''); };
   const onEdit = (p) => setForm({ id: p.id, name: p.name || '', category: p.category || '', price: p.price?.toString() || '', stock: p.stock?.toString() || '', image_url: p.image_url || '', description: p.description || '' });
@@ -43,40 +22,28 @@ export default function AdminProducts() {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    if (!mysqlEnabled || !mysql) return setError('Backend not configured');
     const vErr = validate(); if (vErr) return setNotice(vErr);
-    try {
-      setSaving(true); setError(''); setNotice('');
-      const payload = {
-        name: form.name.trim(),
-        category: form.category || null,
-        price: Number(form.price),
-        stock: parseInt(form.stock) || 0,
-        image_url: form.image_url?.trim() || null,
-        description: form.description?.trim() || null
-      };
-      const resp = form.id ? await mysql.updateProduct(form.id, payload) : await mysql.createProduct(payload);
-      if (resp.error) throw new Error(resp.error);
-      await load();
-      setNotice(form.id ? 'Product updated.' : 'Product added.');
-      reset();
-    } catch (e2) {
-      console.error(e2); setError(e2.message || 'Save failed');
-    } finally { setSaving(false); }
+    const payload = {
+      name: form.name.trim(),
+      category: form.category || null,
+      price: Number(form.price),
+      stock: parseInt(form.stock) || 0,
+      image_url: form.image_url?.trim() || null,
+      description: form.description?.trim() || null
+    };
+    if (form.id) {
+      await updateProduct(form.id, payload);
+      if (!error) setNotice('Product updated.');
+    } else {
+      await createProduct(payload);
+      if (!error) setNotice('Product added.');
+    }
+    if (!error) reset();
   };
 
-  const onDelete = async (id) => {
-    if (!mysqlEnabled || !mysql) return;
+  const onDeleteHandler = async (id) => {
     if (!window.confirm('Delete this product?')) return;
-    try {
-      setSaving(true); setError('');
-      const { error: apiErr } = await mysql.deleteProduct(id);
-      if (apiErr) throw new Error(apiErr);
-      if (form.id === id) reset();
-      await load();
-    } catch (e) {
-      console.error(e); setError(e.message || 'Delete failed');
-    } finally { setSaving(false); }
+    await deleteProduct(id);
   };
 
   if (loading) {
@@ -92,7 +59,7 @@ export default function AdminProducts() {
     <div className="p-6">
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-2xl font-bold">Product Management</h2>
-        <button onClick={load} disabled={saving} className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:opacity-60">Refresh</button>
+        <button onClick={refresh} disabled={saving} className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:opacity-60">Refresh</button>
       </div>
       {error && <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4"><strong>Error:</strong> {error}</div>}
       {notice && !error && <div className="bg-green-100 border border-green-400 text-green-800 px-4 py-2 rounded mb-4">{notice}</div>}
@@ -140,9 +107,9 @@ export default function AdminProducts() {
         </form>
       </div>
 
-      <div className="bg-white shadow rounded-lg">
+  <div className="bg-white shadow rounded-lg">
         <div className="px-6 py-4 border-b border-gray-200">
-          <h3 className="text-lg font-medium">Products ({products.length})</h3>
+          <h3 className="text-lg font-medium">Products ({items.length})</h3>
         </div>
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200">
@@ -156,7 +123,7 @@ export default function AdminProducts() {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {products.map(p => (
+              {items.map(p => (
                 <tr key={p.id}>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center">
@@ -178,7 +145,7 @@ export default function AdminProducts() {
               ))}
             </tbody>
           </table>
-          {products.length === 0 && <div className="text-center py-8 text-gray-500">No products found. Add your first product above.</div>}
+          {items.length === 0 && <div className="text-center py-8 text-gray-500">No products found. Add your first product above.</div>}
         </div>
       </div>
     </div>

@@ -1,20 +1,28 @@
 import React from 'react';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../lib/firebase';
+import { useNavigate } from 'react-router-dom';
+import { useAdmin } from './AdminContext';
 
 export default function AdminLogin() {
-  const [email, setEmail] = React.useState('');
+  const { login, isAuthenticated } = useAdmin();
+  const navigate = useNavigate();
   const [password, setPassword] = React.useState('');
   const [error, setError] = React.useState('');
 
-  const onSubmit = async (e) => {
+  React.useEffect(() => {
+    if (isAuthenticated) navigate('/admin', { replace: true });
+  }, [isAuthenticated, navigate]);
+
+  // Simple placeholder auth: accept a password defined via env var or default
+  const EXPECTED = import.meta.env.VITE_ADMIN_PASSWORD || 'admin';
+
+  const onSubmit = (e) => {
     e.preventDefault();
     setError('');
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
-      window.location.href = '/admin';
-    } catch (err) {
-      setError(err.message);
+    if (password === EXPECTED) {
+      login();
+      navigate('/admin', { replace: true });
+    } else {
+      setError('Invalid password');
     }
   };
 
@@ -22,13 +30,10 @@ export default function AdminLogin() {
     <div className="auth-container">
       <form className="card" onSubmit={onSubmit}>
         <h2>Admin Login</h2>
-        {auth && auth._unconfigured && (
-          <p className="error">Admin is not configured yet. Add Firebase env keys to .env.local and restart the dev server.</p>
-        )}
-        <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
         <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
         {error && <p className="error">{error}</p>}
         <button className="btn" type="submit">Login</button>
+        <p style={{fontSize:'0.75rem',color:'#6b7280',marginTop:'0.5rem'}}>Use password: <code>{EXPECTED}</code></p>
       </form>
       <style jsx>{`
         .auth-container { display: grid; place-items: center; min-height: 100vh; }
