@@ -44,7 +44,8 @@ body {
   line-height: 1.7;
   color: var(--neutral-800);
   background-color: var(--white);
-  background-image: url('/background.jpg');
+  /* use bundled background asset */
+  background-image: url('/src/assets/images/background.jpg');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;

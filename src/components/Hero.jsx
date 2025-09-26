@@ -1,4 +1,6 @@
 import React from 'react';
+import heroBin from '../assets/images/bin_in_toilet.jpg';
+import bgImage from '../assets/images/background.jpg';
 import { ArrowRight, Sparkles, CheckCircle2, Star, User } from 'lucide-react';
 
 const Hero = () => {
@@ -53,7 +55,7 @@ const Hero = () => {
           <div className="hero-right">
             <div className="hero-image">
               <img 
-                src="/images/bin_in_toilet.jpg" 
+                src={heroBin} 
                 alt="Sanitary bin in toilet" 
                 className="main-image"
               />
@@ -71,7 +73,7 @@ const Hero = () => {
         .hero-background {
           position: absolute;
           inset: 0;
-          background: url('/background.jpg') center/cover fixed,
+          background: url(${bgImage}) center/cover fixed,
                       radial-gradient(1200px 600px at 10% 0%, rgba(59,130,246,0.10), transparent 60%),
                       radial-gradient(1000px 500px at 90% 10%, rgba(16,185,129,0.10), transparent 60%);
           pointer-events: none;

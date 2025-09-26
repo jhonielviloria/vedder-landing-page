@@ -121,7 +121,6 @@ const Store = ({ addToCart }) => {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [sortBy, setSortBy] = useState('name');
   const [currentPage, setCurrentPage] = useState(1);
-  const [showFilters, setShowFilters] = useState(false);
   const productsPerPage = 12;
 
   useEffect(() => {
@@ -194,18 +193,18 @@ const Store = ({ addToCart }) => {
       <section className="store-hero">
         <div className="container">
           <div className="hero-content">
-            <h1>Toilet Products Store</h1>
-            <p>Your complete source for professional toilet and sanitary products</p>
+            <h1 className="hero-title">Toilet Products Store</h1>
+            <p className="hero-subtitle">Your complete source for professional toilet and sanitary products</p>
             <div className="hero-stats">
-              <div className="stat">
+              <div className="stat-card">
                 <span className="stat-number">{allProducts.length}+</span>
                 <span className="stat-label">Products</span>
               </div>
-              <div className="stat">
+              <div className="stat-card">
                 <span className="stat-number">{categories.length - 1}</span>
                 <span className="stat-label">Categories</span>
               </div>
-              <div className="stat">
+              <div className="stat-card">
                 <span className="stat-number">24/7</span>
                 <span className="stat-label">Support</span>
               </div>
@@ -214,69 +213,37 @@ const Store = ({ addToCart }) => {
         </div>
       </section>
 
-      {/* Search and Filters */}
+      {/* Filters Section - simplified */}
       <section className="store-filters">
-        <div className="container">
-          <div className="filters-header">
-            <div className="search-box">
-              <Search size={20} />
-              <input
-                type="text"
-                placeholder="Search products..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-            </div>
-            <button 
-              className="filter-toggle"
-              onClick={() => setShowFilters(!showFilters)}
-            >
-              <Filter size={20} />
-              Filters
-            </button>
+        <div className="container filter-bar">
+          <div className="search-box">
+            <Search size={20} />
+            <input
+              type="text"
+              placeholder="Search products..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
           </div>
-
-          {showFilters && (
-            <div className="filters-panel">
-              <div className="filter-group">
-                <label>Category</label>
-                <select
-                  value={selectedCategory}
-                  onChange={(e) => setSelectedCategory(e.target.value)}
-                >
-                  {categories.map(cat => (
-                    <option key={cat} value={cat}>{cat}</option>
-                  ))}
-                </select>
-              </div>
-              <div className="filter-group">
-                <label>Sort By</label>
-                <select
-                  value={sortBy}
-                  onChange={(e) => setSortBy(e.target.value)}
-                >
-                  <option value="name">Name (A-Z)</option>
-                  <option value="price-low">Price (Low to High)</option>
-                  <option value="price-high">Price (High to Low)</option>
-                </select>
-              </div>
-              <button 
-                className="clear-filters"
-                onClick={() => {
-                  setSearchTerm('');
-                  setSelectedCategory('All');
-                  setSortBy('name');
-                }}
-              >
-                <X size={16} />
-                Clear All
-              </button>
-            </div>
-          )}
-
-          <div className="results-info">
-            <span>Showing {paginatedProducts.length} of {filteredProducts.length} products</span>
-            {searchTerm && <span className="search-result">for "{searchTerm}"</span>}
+          <div className="category-buttons">
+            {categories.map(cat => (
+              <button
+                key={cat}
+                className={selectedCategory === cat ? 'active' : ''}
+                onClick={() => setSelectedCategory(cat)}
+              >{cat}</button>
+            ))}
+          </div>
+          <div className="sort-select">
+            <label>Sort by:</label>
+            <select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value)}
+            >
+              <option value="name">Name (A-Z)</option>
+              <option value="price-low">Price (Low to High)</option>
+              <option value="price-high">Price (High to Low)</option>
+            </select>
           </div>
         </div>
       </section>
@@ -284,93 +251,86 @@ const Store = ({ addToCart }) => {
       {/* Products Grid */}
       <section className="store-products">
         <div className="container">
-          {loading && <p className="loading">Loading products...</p>}
-          
           <div className="products-grid">
-            {paginatedProducts.map((product) => (
-              <div key={product.id} className="product-card">
-                <div className="product-image">
-                  {(() => {
-                    const val = product.image;
-                    const isUrl = typeof val === 'string' && /^(https?:\/\/|data:image)/i.test(val);
-                    return isUrl ? (
-                      <img
-                        className="product-photo"
-                        src={val}
-                        alt={product.name}
-                        loading="lazy"
-                        decoding="async"
-                      />
-                    ) : (
-                      <span className="product-emoji">{val}</span>
-                    );
-                  })()}
-                  <div className="product-category">{product.category}</div>
-                  {product.inStock && <div className="stock-badge">In Stock</div>}
-                </div>
+           {paginatedProducts.map((product) => (
+             <div key={product.id} className="product-card">
+              <div className="product-image">
+                {(() => {
+                  const val = product.image;
+                  const isUrl = typeof val === 'string' && /^(https?:\/\/|data:image)/i.test(val);
+                  return isUrl ? (
+                    <img
+                      className="product-photo"
+                      src={val}
+                      alt={product.name}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  ) : (
+                    <span className="product-emoji">{val}</span>
+                  );
+                })()}
+                <div className="product-category">{product.category}</div>
+                {product.inStock && <div className="stock-badge">In Stock</div>}
+              </div>
+              
+              <div className="product-info">
+                <h3 className="product-name">{product.name}</h3>
+                <p className="product-description">{product.description}</p>
                 
-                <div className="product-info">
-                  <h3 className="product-name">{product.name}</h3>
-                  <p className="product-description">{product.description}</p>
-                  
-                  <div className="product-footer">
-                    <div className="product-price">
-                      ${product.price}
-                    </div>
-                    <button
-                      className="btn btn-primary add-to-cart-btn"
-                      onClick={() => addToCart(product)}
-                      disabled={!product.inStock}
-                    >
-                      <ShoppingCart size={16} />
-                      {product.inStock ? 'Add to Cart' : 'Out of Stock'}
-                    </button>
+                <div className="product-footer">
+                  <div className="product-price">
+                    ${product.price}
                   </div>
+                  <button
+                    className="btn btn-primary add-to-cart-btn"
+                    onClick={() => addToCart(product)}
+                    disabled={!product.inStock}
+                  >
+                    <ShoppingCart size={16} />
+                    {product.inStock ? 'Add to Cart' : 'Out of Stock'}
+                  </button>
                 </div>
               </div>
-            ))}
+            </div>
+          ))}
           </div>
-
-          {filteredProducts.length === 0 && !loading && (
-            <div className="no-results">
-              <h3>No products found</h3>
-              <p>Try adjusting your search terms or filters</p>
-            </div>
-          )}
-
-          {/* Pagination */}
-          {totalPages > 1 && (
-            <div className="pagination">
-              <button
-                onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-                disabled={currentPage === 1}
-                className="pagination-btn"
-              >
-                Previous
-              </button>
-              
-              <div className="pagination-numbers">
-                {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
-                  <button
-                    key={page}
-                    onClick={() => setCurrentPage(page)}
-                    className={`pagination-number ${currentPage === page ? 'active' : ''}`}
-                  >
-                    {page}
-                  </button>
-                ))}
-              </div>
-              
-              <button
-                onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
-                disabled={currentPage === totalPages}
-                className="pagination-btn"
-              >
-                Next
-              </button>
-            </div>
-          )}
         </div>
+      </section>
+
+      {/* Pagination */}
+      <section className="store-pagination">
+        {totalPages > 1 && (
+          <div className="pagination">
+            <button
+              onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+              disabled={currentPage === 1}
+              className="pagination-btn"
+            >
+              Previous
+            </button>
+            
+            <div className="pagination-numbers">
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
+                <button
+                  key={page}
+                  onClick={() => setCurrentPage(page)}
+                  className={`pagination-number ${currentPage === page ? 'active' : ''}`}
+                >
+                  {page}
+                </button>
+              ))}
+            </div>
+            
+            <button
+              onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+              disabled={currentPage === totalPages}
+              className="pagination-btn"
+            >
+              Next
+            </button>
+          </div>
+        )}
       </section>
 
       <style jsx>{`
@@ -380,47 +340,60 @@ const Store = ({ addToCart }) => {
         }
 
         .store-hero {
-          background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
-          color: white;
+          background: linear-gradient(180deg, var(--neutral-100) 0%, rgba(16, 185, 129, 0.06) 100%);
+          color: var(--neutral-900);
           padding: 6rem 0 4rem;
           text-align: center;
         }
 
-        .hero-content h1 {
-          font-size: 3rem;
-          margin-bottom: 1rem;
-          font-weight: 700;
+        .hero-content {
+          max-width: 1000px;
+          margin: 0 auto;
+          padding: 0 1rem;
         }
 
-        .hero-content p {
-          font-size: 1.25rem;
-          margin-bottom: 3rem;
-          opacity: 0.9;
+        .hero-title {
+          font-size: clamp(2.25rem, 2vw + 1.5rem, 3.25rem);
+          line-height: 1.1;
+          letter-spacing: -0.02em;
+          margin: 0 0 0.75rem;
+        }
+
+        .hero-subtitle {
+          font-size: 1.125rem;
+          color: var(--neutral-700);
+          max-width: 780px;
+          margin: 0 auto 2rem;
         }
 
         .hero-stats {
-          display: flex;
-          justify-content: center;
-          gap: 3rem;
-          flex-wrap: wrap;
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+          gap: 1rem;
+          margin-top: 1rem;
         }
 
-        .stat {
+        .stat-card {
+          background: white;
+          border: 1px solid var(--neutral-200);
+          box-shadow: 0 10px 20px -10px rgba(0,0,0,0.15);
+          border-radius: 0.75rem;
+          padding: 1.25rem;
           display: flex;
           flex-direction: column;
           align-items: center;
         }
 
         .stat-number {
-          font-size: 2.5rem;
+          font-size: 2rem;
           font-weight: 700;
           line-height: 1;
-          margin-bottom: 0.5rem;
+          margin-bottom: 0.25rem;
         }
 
         .stat-label {
-          font-size: 0.9rem;
-          opacity: 0.8;
+          font-size: 0.85rem;
+          color: var(--neutral-600);
           text-transform: uppercase;
           letter-spacing: 0.5px;
         }
@@ -434,12 +407,12 @@ const Store = ({ addToCart }) => {
           z-index: 10;
         }
 
-        .filters-header {
+        .filter-bar {
           display: flex;
           justify-content: space-between;
           align-items: center;
           gap: 1rem;
-          margin-bottom: 1rem;
+          flex-wrap: wrap;
         }
 
         .search-box {
@@ -470,80 +443,46 @@ const Store = ({ addToCart }) => {
           box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
         }
 
-        .filter-toggle {
+        .category-buttons {
           display: flex;
-          align-items: center;
-          gap: 0.5rem;
-          padding: 0.75rem 1.5rem;
+          flex-wrap: wrap;
+          gap: 0.75rem;
+        }
+
+        .category-buttons button {
+          padding: 0.5rem 1rem;
           background: var(--neutral-100);
           border: 1px solid var(--neutral-300);
           border-radius: 0.5rem;
           cursor: pointer;
           transition: all 0.2s;
-        }
-
-        .filter-toggle:hover {
-          background: var(--neutral-200);
-        }
-
-        .filters-panel {
-          display: flex;
-          gap: 1.5rem;
-          align-items: end;
-          padding: 1.5rem;
-          background: var(--neutral-50);
-          border-radius: 0.5rem;
-          margin-bottom: 1rem;
-          flex-wrap: wrap;
-        }
-
-        .filter-group {
-          display: flex;
-          flex-direction: column;
-          gap: 0.5rem;
-        }
-
-        .filter-group label {
           font-size: 0.9rem;
-          font-weight: 500;
+        }
+
+        .category-buttons button.active {
+          background: var(--primary-blue);
+          color: white;
+          border-color: var(--primary-blue);
+        }
+
+        .sort-select {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          font-size: 0.9rem;
+        }
+
+        .sort-select label {
+          margin: 0;
           color: var(--neutral-700);
         }
 
-        .filter-group select {
+        .sort-select select {
           padding: 0.5rem;
           border: 1px solid var(--neutral-300);
           border-radius: 0.25rem;
           background: white;
           min-width: 150px;
-        }
-
-        .clear-filters {
-          display: flex;
-          align-items: center;
-          gap: 0.5rem;
-          padding: 0.5rem 1rem;
-          background: transparent;
-          border: 1px solid var(--neutral-300);
-          border-radius: 0.25rem;
-          cursor: pointer;
-          color: var(--neutral-600);
-          transition: all 0.2s;
-        }
-
-        .clear-filters:hover {
-          background: var(--neutral-100);
-        }
-
-        .results-info {
-          display: flex;
-          gap: 0.5rem;
-          font-size: 0.9rem;
-          color: var(--neutral-600);
-        }
-
-        .search-result {
-          color: var(--primary-blue);
-          font-weight: 500;
         }
 
         .store-products {
@@ -744,7 +683,7 @@ const Store = ({ addToCart }) => {
             gap: 2rem;
           }
 
-          .filters-header {
+          .filter-bar {
             flex-direction: column;
             align-items: stretch;
           }
@@ -753,21 +692,12 @@ const Store = ({ addToCart }) => {
             max-width: none;
           }
 
-          .filters-panel {
-            flex-direction: column;
-            align-items: stretch;
+          .category-buttons {
+            justify-content: flex-start;
           }
 
-          .filter-group {
-            flex-direction: row;
-            justify-content: space-between;
-            align-items: center;
-          }
-
-          .filter-group select {
-            min-width: auto;
-            flex: 1;
-            max-width: 200px;
+          .sort-select {
+            width: 100%;
           }
 
           .products-grid {
