@@ -1,6 +1,7 @@
 import React from 'react';
 import { ShoppingCart } from 'lucide-react';
 import { mysql, mysqlEnabled } from '../lib/mysql';
+import { Link } from 'react-router-dom';
 
 const Products = ({ addToCart }) => {
   const fallbackProducts = [
@@ -172,6 +173,10 @@ const Products = ({ addToCart }) => {
           ))}
         </div>
 
+        {/* View All Products button placed below grid */}
+        <div style={{ textAlign: 'center', margin: '2rem 0' }}>
+          <Link to="/store" className="btn btn-secondary">View All Products</Link>
+        </div>
         <div className="products-cta">
           <div className="cta-card">
             <h3>Need Bulk Orders?</h3>
@@ -181,7 +186,6 @@ const Products = ({ addToCart }) => {
             </p>
             <div className="cta-actions">
               <button className="btn btn-primary">Request Bulk Quote</button>
-              <a href="/store" className="btn btn-secondary">View All Products</a>
             </div>
           </div>
         </div>
