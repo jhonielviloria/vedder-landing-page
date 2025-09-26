@@ -17,7 +17,7 @@ import InventoryIcon from '@mui/icons-material/Inventory';
 import MessageIcon from '@mui/icons-material/Message';
 import ReceiptIcon from '@mui/icons-material/Receipt';
 import LogoutIcon from '@mui/icons-material/Logout';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { useAdmin } from '../admin/AdminContext';
 
 const drawerWidth = 240;
@@ -90,17 +90,25 @@ export default function Layout({ children }) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(true);
   const navigate = useNavigate();
+  const location = useLocation();
   const { logout } = useAdmin();
 
   const handleDrawerOpen = () => { setOpen(true); };
   const handleDrawerClose = () => { setOpen(false); };
 
   const links = [
-    { text: 'Dashboard', icon: <DashboardIcon />, path: '/admin' },
+    { text: 'Dashboard', icon: <DashboardIcon />, path: '/admin', exact: true },
     { text: 'Products', icon: <InventoryIcon />, path: '/admin/products' },
     { text: 'Messages', icon: <MessageIcon />, path: '/admin/messages' },
     { text: 'Orders', icon: <ReceiptIcon />, path: '/admin/orders' },
   ];
+
+  const isActiveLink = (path, exact = false) => {
+    if (exact) {
+      return location.pathname === path;
+    }
+    return location.pathname.startsWith(path);
+  };
 
   return (
     <div style={{ display: 'flex' }}>
@@ -131,12 +139,31 @@ export default function Layout({ children }) {
         </DrawerHeader>
         <Divider />
         <List>
-          {links.map(({ text, icon, path }) => (
-            <ListItem button key={text} onClick={() => navigate(path)} sx={{ pl: open ? 2 : 1 }}>
-              <ListItemIcon>{icon}</ListItemIcon>
-              {open && <ListItemText primary={text} />}
-            </ListItem>
-          ))}
+          {links.map(({ text, icon, path, exact }) => {
+            const isActive = isActiveLink(path, exact);
+            return (
+              <ListItem 
+                button 
+                key={text} 
+                component={NavLink}
+                to={path}
+                sx={{ 
+                  pl: open ? 2 : 1,
+                  backgroundColor: isActive ? 'rgba(25, 118, 210, 0.12)' : 'transparent',
+                  color: isActive ? '#1976d2' : 'inherit',
+                  '&:hover': {
+                    backgroundColor: isActive ? 'rgba(25, 118, 210, 0.18)' : 'rgba(0, 0, 0, 0.04)',
+                  },
+                  '& .MuiListItemIcon-root': {
+                    color: isActive ? '#1976d2' : 'inherit',
+                  }
+                }}
+              >
+                <ListItemIcon>{icon}</ListItemIcon>
+                {open && <ListItemText primary={text} />}
+              </ListItem>
+            );
+          })}
         </List>
         <Divider />
         <ListItem button onClick={() => { logout(); navigate('/admin/login'); }}>
