@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 
-const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001';
+const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001/api'; // VITE_API_BASE_URL should include '/api' if used
 
 export const useCategories = () => {
   const [items, setItems] = useState([]);
@@ -12,7 +12,7 @@ export const useCategories = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch(`${API_BASE}/api/categories`);
+      const response = await fetch(`${API_BASE}/categories`);
       if (!response.ok) throw new Error('Failed to fetch categories');
       const data = await response.json();
       setItems(data);
@@ -27,7 +27,7 @@ export const useCategories = () => {
   const createCategory = useCallback(async (categoryData) => {
     setSaving(true);
     try {
-      const response = await fetch(`${API_BASE}/api/categories`, {
+      const response = await fetch(`${API_BASE}/categories`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(categoryData),
@@ -48,7 +48,7 @@ export const useCategories = () => {
   const updateCategory = useCallback(async (id, categoryData) => {
     setSaving(true);
     try {
-      const response = await fetch(`${API_BASE}/api/categories/${id}`, {
+      const response = await fetch(`${API_BASE}/categories/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(categoryData),
@@ -68,7 +68,7 @@ export const useCategories = () => {
 
   const deleteCategory = useCallback(async (id) => {
     try {
-      const response = await fetch(`${API_BASE}/api/categories/${id}`, {
+      const response = await fetch(`${API_BASE}/categories/${id}`, {
         method: 'DELETE',
       });
       if (!response.ok) {
