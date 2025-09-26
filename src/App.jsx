@@ -124,16 +124,20 @@ function App() {
         {/* New admin panel */}
         <Route path="/admin/*" element={
           <AdminProvider>
-            <Layout>
-              <Routes>
-                <Route path="login" element={<AdminLogin />} />
-                <Route path="" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-                <Route path="products" element={<ProtectedRoute><AdminProductsPage /></ProtectedRoute>} />
-                <Route path="messages" element={<ProtectedRoute><AdminMessagesPage /></ProtectedRoute>} />
-                <Route path="orders" element={<ProtectedRoute><AdminOrdersPage /></ProtectedRoute>} />
-                <Route path="*" element={<Navigate to="/admin" replace />} />
-              </Routes>
-            </Layout>
+            <Routes>
+              <Route path="login" element={<AdminLogin />} />
+              <Route path="*" element={
+                <Layout>
+                  <Routes>
+                    <Route path="" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+                    <Route path="products" element={<ProtectedRoute><AdminProductsPage /></ProtectedRoute>} />
+                    <Route path="messages" element={<ProtectedRoute><AdminMessagesPage /></ProtectedRoute>} />
+                    <Route path="orders" element={<ProtectedRoute><AdminOrdersPage /></ProtectedRoute>} />
+                    <Route path="*" element={<Navigate to="/admin" replace />} />
+                  </Routes>
+                </Layout>
+              } />
+            </Routes>
           </AdminProvider>
         } />
 
