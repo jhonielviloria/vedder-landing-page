@@ -30,11 +30,11 @@ app.get('/api/products', async (req, res) => {
 
 app.post('/api/products', async (req, res) => {
   try {
-    const { name, price, stock, image_url, description, category } = req.body;
+    const { name, price, stock, image_url, description, category, show_on_main_page } = req.body;
     
     const [result] = await pool.execute(
-      'INSERT INTO products (name, price, stock, image_url, description, category) VALUES (?, ?, ?, ?, ?, ?)',
-      [name, price, stock || 0, image_url, description, category]
+      'INSERT INTO products (name, price, stock, image_url, description, category, show_on_main_page) VALUES (?, ?, ?, ?, ?, ?, ?)',
+      [name, price, stock || 0, image_url, description, category, show_on_main_page !== undefined ? show_on_main_page : true]
     );
     
     const [newProduct] = await pool.execute('SELECT * FROM products WHERE id = ?', [result.insertId]);
@@ -48,11 +48,11 @@ app.post('/api/products', async (req, res) => {
 app.put('/api/products/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, price, stock, image_url, description, category } = req.body;
+    const { name, price, stock, image_url, description, category, show_on_main_page } = req.body;
     
     await pool.execute(
-      'UPDATE products SET name = ?, price = ?, stock = ?, image_url = ?, description = ?, category = ? WHERE id = ?',
-      [name, price, stock, image_url, description, category, id]
+      'UPDATE products SET name = ?, price = ?, stock = ?, image_url = ?, description = ?, category = ?, show_on_main_page = ? WHERE id = ?',
+      [name, price, stock, image_url, description, category, show_on_main_page !== undefined ? show_on_main_page : true, id]
     );
     
     const [updatedProduct] = await pool.execute('SELECT * FROM products WHERE id = ?', [id]);

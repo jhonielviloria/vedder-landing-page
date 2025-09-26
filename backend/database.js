@@ -43,10 +43,24 @@ async function initializeTables() {
         image_url TEXT,
         description TEXT,
         category VARCHAR(100),
+        show_on_main_page BOOLEAN DEFAULT TRUE,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
       )
     `);
+
+    // Add show_on_main_page column if it doesn't exist (for existing tables)
+    try {
+      await pool.execute(`
+        ALTER TABLE products 
+        ADD COLUMN show_on_main_page BOOLEAN DEFAULT TRUE
+      `);
+    } catch (error) {
+      // Column already exists, ignore error
+      if (!error.message.includes('Duplicate column name')) {
+        console.warn('Note: show_on_main_page column may already exist');
+      }
+    }
 
     // Create contact_messages table
     await pool.execute(`

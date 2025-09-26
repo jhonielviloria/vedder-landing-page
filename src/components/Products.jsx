@@ -92,15 +92,17 @@ const Products = ({ addToCart }) => {
       setLoading(true);
       const { data, error } = await mysql.getProducts();
       if (!error && data && active) {
-        const mapped = data.map(p => ({
-          id: p.id,
-          name: p.name,
-          description: p.description || '',
-          price: Number(p.price),
-          image: p.image_url || '🧻',
-          category: p.category || 'General',
-          inStock: (typeof p.stock === 'number' ? p.stock > 0 : true),
-        }));
+        const mapped = data
+          .filter(p => p.show_on_main_page === 1 || p.show_on_main_page === true) // Only show products marked for main page
+          .map(p => ({
+            id: p.id,
+            name: p.name,
+            description: p.description || '',
+            price: Number(p.price),
+            image: p.image_url || '🧻',
+            category: p.category || 'General',
+            inStock: (typeof p.stock === 'number' ? p.stock > 0 : true),
+          }));
         setProducts(mapped);
       }
       if (active) setLoading(false);
