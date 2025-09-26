@@ -20,7 +20,12 @@ app.get('/api/health', (req, res) => {
 // Products endpoints
 app.get('/api/products', async (req, res) => {
   try {
-    const [rows] = await pool.execute('SELECT * FROM products ORDER BY id ASC');
+    const [rows] = await pool.execute(`
+      SELECT p.*, c.name as category_name 
+      FROM products p 
+      LEFT JOIN categories c ON p.category_id = c.id 
+      ORDER BY p.id ASC
+    `);
     res.json(rows);
   } catch (error) {
     console.error('Error fetching products:', error);
@@ -30,14 +35,19 @@ app.get('/api/products', async (req, res) => {
 
 app.post('/api/products', async (req, res) => {
   try {
-    const { name, price, stock, image_url, description, category, show_on_main_page } = req.body;
+    const { name, price, stock, image_url, description, category, category_id, show_on_main_page } = req.body;
     
     const [result] = await pool.execute(
-      'INSERT INTO products (name, price, stock, image_url, description, category, show_on_main_page) VALUES (?, ?, ?, ?, ?, ?, ?)',
-      [name, price, stock || 0, image_url, description, category, show_on_main_page !== undefined ? show_on_main_page : true]
+      'INSERT INTO products (name, price, stock, image_url, description, category, category_id, show_on_main_page) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+      [name, price, stock || 0, image_url, description, category, category_id, show_on_main_page !== undefined ? show_on_main_page : true]
     );
     
-    const [newProduct] = await pool.execute('SELECT * FROM products WHERE id = ?', [result.insertId]);
+    const [newProduct] = await pool.execute(`
+      SELECT p.*, c.name as category_name 
+      FROM products p 
+      LEFT JOIN categories c ON p.category_id = c.id 
+      WHERE p.id = ?
+    `, [result.insertId]);
     res.status(201).json(newProduct[0]);
   } catch (error) {
     console.error('Error creating product:', error);
@@ -48,14 +58,19 @@ app.post('/api/products', async (req, res) => {
 app.put('/api/products/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, price, stock, image_url, description, category, show_on_main_page } = req.body;
+    const { name, price, stock, image_url, description, category, category_id, show_on_main_page } = req.body;
     
     await pool.execute(
-      'UPDATE products SET name = ?, price = ?, stock = ?, image_url = ?, description = ?, category = ?, show_on_main_page = ? WHERE id = ?',
-      [name, price, stock, image_url, description, category, show_on_main_page !== undefined ? show_on_main_page : true, id]
+      'UPDATE products SET name = ?, price = ?, stock = ?, image_url = ?, description = ?, category = ?, category_id = ?, show_on_main_page = ? WHERE id = ?',
+      [name, price, stock, image_url, description, category, category_id, show_on_main_page !== undefined ? show_on_main_page : true, id]
     );
     
-    const [updatedProduct] = await pool.execute('SELECT * FROM products WHERE id = ?', [id]);
+    const [updatedProduct] = await pool.execute(`
+      SELECT p.*, c.name as category_name 
+      FROM products p 
+      LEFT JOIN categories c ON p.category_id = c.id 
+      WHERE p.id = ?
+    `, [id]);
     res.json(updatedProduct[0]);
   } catch (error) {
     console.error('Error updating product:', error);
@@ -71,6 +86,71 @@ app.delete('/api/products/:id', async (req, res) => {
   } catch (error) {
     console.error('Error deleting product:', error);
     res.status(500).json({ error: 'Failed to delete product' });
+  }
+});
+
+// Categories endpoints
+app.get('/api/categories', async (req, res) => {
+  try {
+    const [rows] = await pool.execute('SELECT * FROM categories ORDER BY name');
+    res.json(rows);
+  } catch (error) {
+    console.error('Error fetching categories:', error);
+    res.status(500).json({ error: 'Failed to fetch categories' });
+  }
+});
+
+app.post('/api/categories', async (req, res) => {
+  try {
+    const { name, description } = req.body;
+    const [result] = await pool.execute(
+      'INSERT INTO categories (name, description) VALUES (?, ?)',
+      [name, description || null]
+    );
+    res.status(201).json({ id: result.insertId, name, description });
+  } catch (error) {
+    console.error('Error creating category:', error);
+    if (error.code === 'ER_DUP_ENTRY') {
+      res.status(400).json({ error: 'Category name already exists' });
+    } else {
+      res.status(500).json({ error: 'Failed to create category' });
+    }
+  }
+});
+
+app.put('/api/categories/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, description } = req.body;
+    await pool.execute(
+      'UPDATE categories SET name = ?, description = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?',
+      [name, description || null, id]
+    );
+    res.json({ message: 'Category updated successfully' });
+  } catch (error) {
+    console.error('Error updating category:', error);
+    if (error.code === 'ER_DUP_ENTRY') {
+      res.status(400).json({ error: 'Category name already exists' });
+    } else {
+      res.status(500).json({ error: 'Failed to update category' });
+    }
+  }
+});
+
+app.delete('/api/categories/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    // Check if any products are using this category
+    const [products] = await pool.execute('SELECT COUNT(*) as count FROM products WHERE category_id = ?', [id]);
+    if (products[0].count > 0) {
+      return res.status(400).json({ error: 'Cannot delete category that is being used by products' });
+    }
+    
+    await pool.execute('DELETE FROM categories WHERE id = ?', [id]);
+    res.json({ message: 'Category deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting category:', error);
+    res.status(500).json({ error: 'Failed to delete category' });
   }
 });
 

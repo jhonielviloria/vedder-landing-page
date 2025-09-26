@@ -15,6 +15,7 @@ import Cart from './components/Cart';
 import Layout from './admin-v2/Layout';
 import Dashboard from './admin-v2/Dashboard';
 import AdminProductsPage from './admin-v2/Products';
+import AdminCategoriesPage from './admin-v2/Categories';
 import AdminMessagesPage from './admin-v2/Messages';
 import AdminOrdersPage from './admin-v2/Orders';
 import AdminLogin from './admin/AdminLogin';
@@ -131,6 +132,7 @@ function App() {
                   <Routes>
                     <Route path="" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
                     <Route path="products" element={<ProtectedRoute><AdminProductsPage /></ProtectedRoute>} />
+                    <Route path="categories" element={<ProtectedRoute><AdminCategoriesPage /></ProtectedRoute>} />
                     <Route path="messages" element={<ProtectedRoute><AdminMessagesPage /></ProtectedRoute>} />
                     <Route path="orders" element={<ProtectedRoute><AdminOrdersPage /></ProtectedRoute>} />
                     <Route path="*" element={<Navigate to="/admin" replace />} />

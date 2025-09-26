@@ -15,6 +15,10 @@ const pool = mysql.createPool({
   queueLimit: 0,
   acquireTimeout: 60000,
   timeout: 60000,
+  connectTimeout: 10000,
+  // Enable TCP keep-alive to avoid dropped connections
+  enableKeepAlive: true,
+  keepAliveInitialDelay: 0,
 });
 
 // Test connection
@@ -33,6 +37,31 @@ async function testConnection() {
 // Initialize database tables
 async function initializeTables() {
   try {
+    // Create categories table first
+    await pool.execute(`
+      CREATE TABLE IF NOT EXISTS categories (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        name VARCHAR(100) NOT NULL UNIQUE,
+        description TEXT,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+      )
+    `);
+
+    // Insert default categories if table is empty
+    const [categoryRows] = await pool.execute('SELECT COUNT(*) as count FROM categories');
+    if (categoryRows[0].count === 0) {
+      await pool.execute(`
+        INSERT INTO categories (name, description) VALUES 
+        ('Smart Home', 'Smart waste management solutions'),
+        ('Industrial', 'Heavy-duty commercial waste equipment'),
+        ('Eco-Friendly', 'Environmentally conscious waste solutions'),
+        ('Home & Garden', 'Household waste management products'),
+        ('Commercial', 'Business and commercial waste solutions'),
+        ('Medical', 'Healthcare waste management products')
+      `);
+    }
+
     // Create products table
     await pool.execute(`
       CREATE TABLE IF NOT EXISTS products (
@@ -43,13 +72,15 @@ async function initializeTables() {
         image_url TEXT,
         description TEXT,
         category VARCHAR(100),
+        category_id INT,
         show_on_main_page BOOLEAN DEFAULT TRUE,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+        FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE SET NULL
       )
     `);
 
-    // Add show_on_main_page column if it doesn't exist (for existing tables)
+    // Add columns for existing tables
     try {
       await pool.execute(`
         ALTER TABLE products 
@@ -59,6 +90,19 @@ async function initializeTables() {
       // Column already exists, ignore error
       if (!error.message.includes('Duplicate column name')) {
         console.warn('Note: show_on_main_page column may already exist');
+      }
+    }
+
+    try {
+      await pool.execute(`
+        ALTER TABLE products 
+        ADD COLUMN category_id INT,
+        ADD FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE SET NULL
+      `);
+    } catch (error) {
+      // Column already exists, ignore error
+      if (!error.message.includes('Duplicate column name')) {
+        console.warn('Note: category_id column may already exist');
       }
     }
 

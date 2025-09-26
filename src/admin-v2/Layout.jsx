@@ -16,6 +16,7 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import InventoryIcon from '@mui/icons-material/Inventory';
 import MessageIcon from '@mui/icons-material/Message';
 import ReceiptIcon from '@mui/icons-material/Receipt';
+import CategoryIcon from '@mui/icons-material/Category';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { useAdmin } from '../admin/AdminContext';
@@ -99,6 +100,7 @@ export default function Layout({ children }) {
   const links = [
     { text: 'Dashboard', icon: <DashboardIcon />, path: '/admin', exact: true },
     { text: 'Products', icon: <InventoryIcon />, path: '/admin/products' },
+    { text: 'Categories', icon: <CategoryIcon />, path: '/admin/categories' },
     { text: 'Messages', icon: <MessageIcon />, path: '/admin/messages' },
     { text: 'Orders', icon: <ReceiptIcon />, path: '/admin/orders' },
   ];
