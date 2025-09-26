@@ -1,9 +1,5 @@
 import React from 'react';
 import { ArrowRight, Sparkles, CheckCircle2, Star, User } from 'lucide-react';
-import imgBlue from '../assets/images/sani_blue.png';
-import imgSensor from '../assets/images/sani_sensor.webp';
-import imgSlim from '../assets/images/sani_slim.jpg';
-import imgMini from '../assets/images/sani_mini.webp';
 
 const Hero = () => {
   const scrollToSection = (sectionId) => {
@@ -53,18 +49,14 @@ const Hero = () => {
 
           </div>
 
-          {/* Right: Visual collage with 4 images and subtle overlays */}
+          {/* Right: Single image */}
           <div className="hero-right">
-            <div className="media-grid">
-              <div className="media-item image image-1" role="img" aria-label="Sanitary bin - blue model" />
-
-              <div className="media-item image image-2" role="img" aria-label="Sensor sanitary bin">
-              </div>
-
-              <div className="media-item image image-3" role="img" aria-label="Slim sanitary bin">
-              </div>
-
-              <div className="media-item image image-4" role="img" aria-label="Mini sanitary bin" />
+            <div className="hero-image">
+              <img 
+                src="/images/bin_in_toilet.jpg" 
+                alt="Sanitary bin in toilet" 
+                className="main-image"
+              />
             </div>
           </div>
         </div>
@@ -185,36 +177,19 @@ const Hero = () => {
 
   .hero-right { position: relative; justify-self: end; max-width: 520px; width: 100%; grid-area: right; }
 
-        .media-grid {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          grid-template-rows: auto auto;
-          gap: 1.25rem;
-          align-items: center;
-        }
-
-        .media-item {
+        .hero-image {
           position: relative;
           border-radius: 24px;
-          background: #fff;
-          box-shadow: 0 10px 30px rgba(2,6,23,0.08);
           overflow: hidden;
+          box-shadow: 0 20px 40px rgba(2,6,23,0.12);
         }
 
-        .image {
-          background-color: #f8fafc;
-          background-size: cover;
-          background-position: center;
-          height: 180px;
+        .main-image {
+          width: 100%;
+          height: auto;
+          display: block;
+          border-radius: 24px;
         }
-
-    .image-1 { grid-column: 1 / 2; grid-row: 1 / 2; background-image: url(${imgBlue}); }
-  .image-2 { grid-column: 2 / 3; grid-row: 1 / 2; background-image: url(${imgSensor}); }
-  .image-3 { grid-column: 1 / 2; grid-row: 2 / 3; background-image: url(${imgSlim}); }
-  .image-4 { grid-column: 2 / 3; grid-row: 2 / 3; background-image: url(${imgMini}); }
-
-  /* Make image 2 and 3 portrait (taller) */
-  .image-2, .image-3 { height: 240px; }
 
         .success-badge {
           position: absolute;
@@ -267,8 +242,7 @@ const Hero = () => {
 
         @media (max-width: 640px) {
           .hero-actions { gap: 0.75rem; }
-          .image { height: 140px; }
-          .image-2, .image-3 { height: 180px; }
+          .hero-right { max-width: 100%; }
         }
       `}</style>
     </section>
