@@ -300,7 +300,7 @@ const Testimonials = () => {
         .marquee-track {
           display: inline-flex;
           gap: 2rem;
-          animation-duration: 60s;
+          animation-duration: 90s;
           animation-timing-function: linear;
           animation-iteration-count: infinite;
         }
@@ -453,7 +453,7 @@ const Testimonials = () => {
           }
 
           .marquee-track {
-            animation-duration: 40s;
+            animation-duration: 60s;
           }
 
           .testimonials-stats {
