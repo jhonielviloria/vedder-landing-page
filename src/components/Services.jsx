@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Building2, Droplets, Package, Wind, Trash2, ShieldCheck } from 'lucide-react';
+import useScrollAnimation from '../hooks/useScrollAnimation';
 
 const Services = () => {
+  useScrollAnimation('.services .reveal');
+
   const services = [
     {
       id: 1,
@@ -46,7 +49,7 @@ const Services = () => {
   return (
     <section id="services" className="services section-padding">
       <div className="container">
-        <div className="section-header text-center">
+        <div className="section-header text-center reveal">
           <h2>Sanitary & Hygiene Services</h2>
           <p>
             Full-spectrum hygiene programs: disposal, washroom care, dispensing, and compliant waste handling—tailored to your facility.
@@ -57,7 +60,7 @@ const Services = () => {
           {services.map((service, index) => {
             const IconComponent = service.icon;
             return (
-              <div key={service.id} className={`service-card ${index % 2 === 1 ? 'featured' : ''}`}>
+              <div key={service.id} className={`service-card reveal ${index % 2 === 1 ? 'featured' : ''}`} style={{ transitionDelay: `${index * 0.1}s` }}>
                 <div className="service-icon">
                   <IconComponent size={32} />
                 </div>
@@ -153,19 +156,20 @@ const Services = () => {
         .service-icon {
           width: 64px;
           height: 64px;
-          background: var(--primary-blue);
+          background: var(--gradient-primary);
           border-radius: 1rem;
           display: flex;
           align-items: center;
           justify-content: center;
           color: white;
           margin-bottom: 1.5rem;
-          transition: all 0.3s ease;
+          transition: all var(--transition-normal) var(--ease-out-cubic);
+          box-shadow: var(--shadow-md);
         }
 
         .service-card:hover .service-icon {
-          transform: scale(1.1);
-          background: var(--dark-blue);
+          transform: scale(1.1) rotate(5deg);
+          box-shadow: var(--shadow-lg), var(--shadow-glow);
         }
 
         .service-content h3 {

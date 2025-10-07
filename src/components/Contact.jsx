@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { Mail, Phone, MapPin, Clock, Send, CheckCircle } from 'lucide-react';
+import { Mail, Phone, MapPin, Clock, Send, CheckCircle, AlertCircle } from 'lucide-react';
 import { mysql, mysqlEnabled } from '../lib/mysql';
+import useScrollAnimation from '../hooks/useScrollAnimation';
 
 const Contact = () => {
+  useScrollAnimation('.contact .reveal');
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -95,7 +97,7 @@ const Contact = () => {
   return (
     <section id="contact" className="contact section-padding">
       <div className="container">
-        <div className="section-header text-center">
+        <div className="section-header text-center reveal">
           <h2>Get In Touch</h2>
           <p>
             Ready to improve your facility's cleanliness? Contact us today for 
@@ -463,13 +465,17 @@ const Contact = () => {
         }
 
         .error-message {
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
           background: #fee2e2;
           color: #991b1b;
           padding: 0.85rem 1rem;
-          border-radius: 0.5rem;
+          border-radius: var(--radius-sm);
           margin-bottom: 1rem;
           border: 1px solid #fecaca;
           font-size: 0.9rem;
+          animation: fadeIn 0.3s ease-in-out;
         }
 
         .form-row {

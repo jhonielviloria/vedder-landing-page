@@ -16,24 +16,24 @@ const Hero = () => {
         <div className="hero-grid">
           {/* Left: Heading and CTAs */}
           <div className="hero-left">
-            <div className="hero-badge" aria-label="badge">
+            <div className="hero-badge" aria-label="badge" style={{ animation: 'fadeIn 0.6s ease-out' }}>
               <Sparkles size={16} />
               Professional Sanitary Solutions
             </div>
 
-            <h1 className="hero-title">
+            <h1 className="hero-title" style={{ animation: 'fadeInUp 0.8s ease-out 0.2s backwards' }}>
               Professional Sanitary Bins.
               <br />
               <span className="text-gradient">Hygienic Solutions.</span>
             </h1>
 
-            <p className="hero-description">
+            <p className="hero-description" style={{ animation: 'fadeInUp 0.8s ease-out 0.4s backwards' }}>
               Vedder Sanitary Services specializes in premium sanitary bin solutions for businesses
               and facilities. From feminine hygiene disposal to medical waste management, we deliver
               scheduled service with uncompromising hygiene.
             </p>
 
-            <div className="hero-actions">
+            <div className="hero-actions" style={{ animation: 'fadeInUp 0.8s ease-out 0.6s backwards' }}>
               <button
                 className="btn btn-primary btn-large"
                 onClick={() => scrollToSection('bins')}
@@ -52,7 +52,7 @@ const Hero = () => {
           </div>
 
           {/* Right: Single image */}
-          <div className="hero-right">
+          <div className="hero-right" style={{ animation: 'fadeIn 1s ease-out 0.4s backwards' }}>
             <div className="hero-image">
               <img 
                 src={heroBin} 

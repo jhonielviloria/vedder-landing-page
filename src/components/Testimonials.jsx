@@ -1,7 +1,9 @@
 import React from 'react';
 import { Star } from 'lucide-react';
+import useScrollAnimation from '../hooks/useScrollAnimation';
 
 const Testimonials = () => {
+  useScrollAnimation('.testimonials .reveal');
   const topRowTestimonials = [
     {
       id: 1,
@@ -218,7 +220,7 @@ const Testimonials = () => {
   return (
     <section id="testimonials" className="testimonials section-padding">
       <div className="container">
-        <div className="section-header text-center">
+        <div className="section-header text-center reveal">
           <h2>What Our Clients Say</h2>
           <p>
             Don't just take our word for it. Here's what our satisfied clients 
@@ -226,7 +228,7 @@ const Testimonials = () => {
           </p>
         </div>
 
-        <div className="testimonials-marquee">
+        <div className="testimonials-marquee reveal">
           {/* Top row - scrolling left */}
           <div className="marquee-row">
             <div className="marquee-track marquee-left">

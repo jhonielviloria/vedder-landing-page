@@ -12,6 +12,8 @@ import Partners from './components/Partners';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import Cart from './components/Cart';
+import ScrollToTop from './components/ScrollToTop';
+import FloatingContactButton from './components/FloatingContactButton';
 import Layout from './admin-v2/Layout';
 import Dashboard from './admin-v2/Dashboard';
 import AdminProductsPage from './admin-v2/Products';
@@ -95,6 +97,8 @@ function App() {
                 onRemoveItem={removeFromCart}
                 total={getCartTotal()}
               />
+              <ScrollToTop />
+              <FloatingContactButton />
             </>
           }
         />

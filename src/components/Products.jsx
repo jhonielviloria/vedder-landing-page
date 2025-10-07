@@ -1,9 +1,11 @@
 import React from 'react';
-import { ShoppingCart } from 'lucide-react';
+import { ShoppingCart, Loader2 } from 'lucide-react';
 import { mysql, mysqlEnabled } from '../lib/mysql';
 import { Link } from 'react-router-dom';
+import useScrollAnimation from '../hooks/useScrollAnimation';
 
 const Products = ({ addToCart }) => {
+  useScrollAnimation('.products .reveal');
   const fallbackProducts = [
     {
       id: 1,
@@ -114,10 +116,21 @@ const Products = ({ addToCart }) => {
 
   // ratings removed
 
+  // Skeleton Loader Component
+  const ProductSkeleton = () => (
+    <div className="product-card skeleton-card">
+      <div className="skeleton skeleton-image"></div>
+      <div className="skeleton skeleton-title"></div>
+      <div className="skeleton skeleton-text"></div>
+      <div className="skeleton skeleton-text short"></div>
+      <div className="skeleton skeleton-button"></div>
+    </div>
+  );
+
   return (
     <section id="products" className="products section-padding">
       <div className="container">
-        <div className="section-header text-center">
+        <div className="section-header text-center reveal">
           <h2>Toilet Products Store</h2>
           <p>
             Complete your sanitary solution with our range of premium toilet products. 
@@ -125,59 +138,67 @@ const Products = ({ addToCart }) => {
           </p>
         </div>
 
-  {loading && <p style={{ textAlign: 'center', marginBottom: '1rem' }}>Loading products…</p>}
-  <div className="products-grid">
-          {products.slice(0, 8).map((product) => (
-            <div key={product.id} className="product-card">
-              <div className="product-image">
-                {(() => {
-                  const val = product.image;
-                  const isUrl = typeof val === 'string' && /^(https?:\/\/|data:image)/i.test(val);
-                  return isUrl ? (
-                    <img
-                      className="product-photo"
-                      src={val}
-                      alt={product.name}
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  ) : (
-                    <span className="product-emoji">{val}</span>
-                  );
-                })()}
-                <div className="product-category">{product.category}</div>
-                {product.inStock && <div className="stock-badge">In Stock</div>}
-              </div>
-              
-              <div className="product-info">
-                <h3 className="product-name">{product.name}</h3>
-                <p className="product-description">{product.description}</p>
+        {loading ? (
+          <div className="products-grid">
+            {[...Array(8)].map((_, i) => (
+              <ProductSkeleton key={i} />
+            ))}
+          </div>
+        ) : (
+          <div className="products-grid">
+            {products.slice(0, 8).map((product, index) => (
+              <div key={product.id} className="product-card reveal" style={{ transitionDelay: `${index * 0.05}s` }}>
+                <div className="product-image">
+                  {(() => {
+                    const val = product.image;
+                    const isUrl = typeof val === 'string' && /^(https?:\/\/|data:image)/i.test(val);
+                    return isUrl ? (
+                      <img
+                        className="product-photo"
+                        src={val}
+                        alt={product.name}
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    ) : (
+                      <span className="product-emoji">{val}</span>
+                    );
+                  })()}
+                  <div className="product-category">{product.category}</div>
+                  {product.inStock && <div className="stock-badge">In Stock</div>}
+                </div>
                 
-                {/* ratings removed */}
-                
-                <div className="product-footer">
-                  <div className="product-price">
-                    ${product.price}
+                <div className="product-info">
+                  <h3 className="product-name">{product.name}</h3>
+                  <p className="product-description">{product.description}</p>
+                  
+                  {/* ratings removed */}
+                  
+                  <div className="product-footer">
+                    <div className="product-price">
+                      ${product.price}
+                    </div>
+                    <button
+                      className="btn btn-primary add-to-cart-btn"
+                      onClick={() => addToCart(product)}
+                      disabled={!product.inStock}
+                    >
+                      <ShoppingCart size={16} />
+                      {product.inStock ? 'Add to Cart' : 'Out of Stock'}
+                    </button>
                   </div>
-                  <button
-                    className="btn btn-primary add-to-cart-btn"
-                    onClick={() => addToCart(product)}
-                    disabled={!product.inStock}
-                  >
-                    <ShoppingCart size={16} />
-                    {product.inStock ? 'Add to Cart' : 'Out of Stock'}
-                  </button>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
 
         {/* View All Products button placed below grid */}
-        <div style={{ textAlign: 'center', margin: '2rem 0' }}>
-          <Link to="/store" className="btn btn-secondary">View All Products</Link>
+        <div className="view-all-section reveal" style={{ textAlign: 'center', margin: '3rem 0 2rem' }}>
+          <Link to="/store" className="btn btn-secondary btn-large">View All Products</Link>
         </div>
-        <div className="products-cta">
+
+        <div className="products-cta reveal">
           <div className="cta-card">
             <h3>Need Bulk Orders?</h3>
             <p>
@@ -328,6 +349,52 @@ const Products = ({ addToCart }) => {
         .add-to-cart-btn:disabled:hover {
           background: var(--neutral-400);
           transform: none;
+        }
+
+        /* Skeleton Loader Styles */
+        .skeleton-card {
+          pointer-events: none;
+          background: rgba(255, 255, 255, 0.8);
+        }
+
+        .skeleton {
+          background: linear-gradient(
+            90deg,
+            var(--neutral-200) 0%,
+            var(--neutral-100) 50%,
+            var(--neutral-200) 100%
+          );
+          background-size: 200% 100%;
+          animation: shimmer 1.5s infinite;
+          border-radius: 8px;
+        }
+
+        .skeleton-image {
+          width: 100%;
+          height: 200px;
+          margin-bottom: 1rem;
+        }
+
+        .skeleton-title {
+          height: 24px;
+          width: 80%;
+          margin-bottom: 0.75rem;
+        }
+
+        .skeleton-text {
+          height: 16px;
+          width: 100%;
+          margin-bottom: 0.5rem;
+        }
+
+        .skeleton-text.short {
+          width: 60%;
+        }
+
+        .skeleton-button {
+          height: 40px;
+          width: 100%;
+          margin-top: 1rem;
         }
 
         .products-cta {
