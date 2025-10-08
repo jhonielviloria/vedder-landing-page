@@ -9,6 +9,10 @@ import Services from './components/Services';
 import Testimonials from './components/Testimonials';
 import About from './components/About';
 import Partners from './components/Partners';
+import Blog from './components/Blog';
+import BlogPage from './pages/BlogPage';
+import Article1 from './pages/articles/Article1';
+import Article2 from './pages/articles/Article2';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import Cart from './components/Cart';
@@ -86,6 +90,7 @@ function App() {
                 <Testimonials />
                 <About />
                 <Partners />
+                <Blog />
                 <Contact />
               </main>
               <Footer />
@@ -121,6 +126,77 @@ function App() {
                 onRemoveItem={removeFromCart}
                 total={getCartTotal()}
               />
+            </>
+          }
+        />
+
+        <Route
+          path="/blog"
+          element={
+            <>
+              <Navbar 
+                cartItemCount={getCartItemCount()} 
+                onCartToggle={() => setIsCartOpen(!isCartOpen)} 
+              />
+              <BlogPage />
+              <Footer />
+              <Cart
+                isOpen={isCartOpen}
+                onClose={() => setIsCartOpen(false)}
+                items={cartItems}
+                onUpdateQuantity={updateQuantity}
+                onRemoveItem={removeFromCart}
+                total={getCartTotal()}
+              />
+              <ScrollToTop />
+              <FloatingContactButton />
+            </>
+          }
+        />
+
+        {/* Individual Article Routes */}
+        <Route
+          path="/blog/article/1"
+          element={
+            <>
+              <Navbar 
+                cartItemCount={getCartItemCount()} 
+                onCartToggle={() => setIsCartOpen(!isCartOpen)} 
+              />
+              <Article1 />
+              <Footer />
+              <Cart
+                isOpen={isCartOpen}
+                onClose={() => setIsCartOpen(false)}
+                items={cartItems}
+                onUpdateQuantity={updateQuantity}
+                onRemoveItem={removeFromCart}
+                total={getCartTotal()}
+              />
+              <ScrollToTop />
+            </>
+          }
+        />
+
+        <Route
+          path="/blog/article/2"
+          element={
+            <>
+              <Navbar 
+                cartItemCount={getCartItemCount()} 
+                onCartToggle={() => setIsCartOpen(!isCartOpen)} 
+              />
+              <Article2 />
+              <Footer />
+              <Cart
+                isOpen={isCartOpen}
+                onClose={() => setIsCartOpen(false)}
+                items={cartItems}
+                onUpdateQuantity={updateQuantity}
+                onRemoveItem={removeFromCart}
+                total={getCartTotal()}
+              />
+              <ScrollToTop />
             </>
           }
         />

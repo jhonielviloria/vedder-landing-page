@@ -50,6 +50,9 @@ const Navbar = ({ cartItemCount, onCartToggle }) => {
             <button onClick={() => scrollToSection('about')} className="nav-link" role="menuitem">
               About
             </button>
+            <button onClick={() => scrollToSection('blog')} className="nav-link" role="menuitem">
+              Resources
+            </button>
             <button onClick={() => scrollToSection('contact')} className="nav-link" role="menuitem">
               Contact
             </button>
@@ -90,6 +93,9 @@ const Navbar = ({ cartItemCount, onCartToggle }) => {
             </button>
             <button onClick={() => scrollToSection('about')} className="mobile-nav-link">
               About
+            </button>
+            <button onClick={() => scrollToSection('blog')} className="mobile-nav-link">
+              Resources
             </button>
             <button onClick={() => scrollToSection('contact')} className="mobile-nav-link">
               Contact

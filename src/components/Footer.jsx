@@ -67,6 +67,11 @@ const Footer = () => {
                 </button>
               </li>
               <li>
+                <button onClick={() => scrollToSection('blog')} className="footer-link">
+                  Resources
+                </button>
+              </li>
+              <li>
                 <button onClick={() => scrollToSection('contact')} className="footer-link">
                   Contact
                 </button>
