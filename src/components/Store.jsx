@@ -232,87 +232,13 @@ const Store = ({ addToCart }) => {
       <section className="store-hero reveal">
         <div className="container">
           <div className="hero-content">
-            <div className="hero-badge">
-              <TrendingUp size={16} />
-              Professional Sanitary Products
-            </div>
             <h1 className="hero-title">Sanitary Products Store</h1>
             <p className="hero-subtitle">
-              Premium quality toilet and sanitary products for commercial and residential facilities. 
-              Trusted by businesses across Australia.
+              Premium quality products for commercial and residential facilities
             </p>
-            
-            {/* Quick Stats */}
-            <div className="hero-stats">
-              <div className="stat-card reveal">
-                <Package size={24} />
-                <span className="stat-number">{allProducts.length}+</span>
-                <span className="stat-label">Products Available</span>
-              </div>
-              <div className="stat-card reveal">
-                <Shield size={24} />
-                <span className="stat-number">100%</span>
-                <span className="stat-label">Quality Guaranteed</span>
-              </div>
-              <div className="stat-card reveal">
-                <Truck size={24} />
-                <span className="stat-number">Fast</span>
-                <span className="stat-label">Delivery</span>
-              </div>
-              <div className="stat-card reveal">
-                <Award size={24} />
-                <span className="stat-number">24/7</span>
-                <span className="stat-label">Support</span>
-              </div>
-            </div>
           </div>
         </div>
       </section>
-
-      {/* Featured Products Banner */}
-      {featuredProducts.length > 0 && (
-        <section className="featured-section reveal">
-          <div className="container">
-            <div className="section-header">
-              <h2>Featured Products</h2>
-              <p>Hand-picked selections from our bestsellers</p>
-            </div>
-            <div className="featured-grid">
-              {featuredProducts.map(product => (
-                <div key={product.id} className="featured-product">
-                  <div className="featured-badge">Featured</div>
-                  <div className="featured-image">
-                    {(() => {
-                      const val = product.image;
-                      const isUrl = typeof val === 'string' && /^(https?:\/\/|data:image)/i.test(val);
-                      return isUrl ? (
-                        <img src={val} alt={product.name} />
-                      ) : (
-                        <span className="product-emoji">{val}</span>
-                      );
-                    })()}
-                  </div>
-                  <div className="featured-info">
-                    <h3>{product.name}</h3>
-                    <div className="featured-rating">
-                      <Star size={16} fill="currentColor" />
-                      <span>{product.rating}</span>
-                    </div>
-                    <p className="featured-price">${product.price}</p>
-                    <button 
-                      className="btn btn-primary btn-sm"
-                      onClick={() => addToCart(product)}
-                    >
-                      <ShoppingCart size={16} />
-                      Add to Cart
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
 
       {/* Filters & Search Bar */}
       <section className="store-filters reveal">
@@ -583,7 +509,7 @@ const Store = ({ addToCart }) => {
         .store-hero {
           background: var(--gradient-primary);
           color: white;
-          padding: 6rem 0 4rem;
+          padding: 6rem 0 1.5rem;
           position: relative;
           overflow: hidden;
         }
@@ -600,189 +526,27 @@ const Store = ({ addToCart }) => {
         }
 
         .hero-content {
-          max-width: 1000px;
+          max-width: 1200px;
           margin: 0 auto;
           text-align: center;
           position: relative;
           z-index: 1;
         }
 
-        .hero-badge {
-          display: inline-flex;
-          align-items: center;
-          gap: 0.5rem;
-          background: rgba(255, 255, 255, 0.2);
-          padding: 0.5rem 1.25rem;
-          border-radius: 999px;
-          font-size: 0.9rem;
-          font-weight: 600;
-          margin-bottom: 1.5rem;
-          backdrop-filter: blur(10px);
-        }
-
         .hero-title {
-          font-size: clamp(2.5rem, 5vw, 3.5rem);
-          line-height: 1.1;
-          letter-spacing: -0.02em;
-          margin: 0 0 1rem;
-          font-weight: 800;
+          font-size: clamp(1.5rem, 3vw, 2rem);
+          line-height: 1.2;
+          letter-spacing: -0.01em;
+          margin: 0 0 0.5rem;
+          font-weight: 700;
         }
 
         .hero-subtitle {
-          font-size: 1.25rem;
-          line-height: 1.6;
-          max-width: 700px;
-          margin: 0 auto 3rem;
+          font-size: 0.95rem;
+          line-height: 1.4;
+          max-width: 600px;
+          margin: 0 auto;
           opacity: 0.95;
-        }
-
-        .hero-stats {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-          gap: 1.5rem;
-          margin-top: 3rem;
-        }
-
-        .stat-card {
-          background: rgba(255, 255, 255, 0.15);
-          backdrop-filter: blur(10px);
-          border: 1px solid rgba(255, 255, 255, 0.2);
-          border-radius: 1rem;
-          padding: 2rem 1.5rem;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 0.75rem;
-          transition: all var(--transition-normal);
-        }
-
-        .stat-card:hover {
-          background: rgba(255, 255, 255, 0.25);
-          transform: translateY(-4px);
-        }
-
-        .stat-card svg {
-          opacity: 0.9;
-        }
-
-        .stat-number {
-          font-size: 2rem;
-          font-weight: 700;
-          line-height: 1;
-        }
-
-        .stat-label {
-          font-size: 0.9rem;
-          opacity: 0.9;
-          text-align: center;
-        }
-
-        /* Featured Section */
-        .featured-section {
-          padding: 4rem 0;
-          background: white;
-        }
-
-        .section-header {
-          text-align: center;
-          margin-bottom: 3rem;
-        }
-
-        .section-header h2 {
-          font-size: 2.5rem;
-          font-weight: 700;
-          color: var(--neutral-900);
-          margin-bottom: 0.5rem;
-        }
-
-        .section-header p {
-          font-size: 1.125rem;
-          color: var(--neutral-600);
-        }
-
-        .featured-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-          gap: 2rem;
-        }
-
-        .featured-product {
-          background: white;
-          border: 2px solid var(--neutral-200);
-          border-radius: 1rem;
-          padding: 2rem;
-          text-align: center;
-          position: relative;
-          transition: all var(--transition-normal);
-        }
-
-        .featured-product:hover {
-          border-color: var(--primary-blue);
-          box-shadow: var(--shadow-xl);
-          transform: translateY(-8px);
-        }
-
-        .featured-badge {
-          position: absolute;
-          top: 1rem;
-          right: 1rem;
-          background: var(--gradient-accent);
-          color: white;
-          padding: 0.35rem 0.75rem;
-          border-radius: 999px;
-          font-size: 0.75rem;
-          font-weight: 600;
-        }
-
-        .featured-image {
-          width: 120px;
-          height: 120px;
-          margin: 0 auto 1.5rem;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background: var(--light-blue);
-          border-radius: 1rem;
-        }
-
-        .featured-image .product-emoji {
-          font-size: 4rem;
-        }
-
-        .featured-image img {
-          width: 100%;
-          height: 100%;
-          object-fit: contain;
-          border-radius: 1rem;
-        }
-
-        .featured-info h3 {
-          font-size: 1.25rem;
-          font-weight: 600;
-          color: var(--neutral-900);
-          margin-bottom: 0.75rem;
-        }
-
-        .featured-rating {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 0.35rem;
-          color: #FFA500;
-          font-size: 0.9rem;
-          font-weight: 600;
-          margin-bottom: 0.75rem;
-        }
-
-        .featured-price {
-          font-size: 1.75rem;
-          font-weight: 700;
-          color: var(--primary-blue);
-          margin-bottom: 1rem;
-        }
-
-        .featured-info .btn {
-          width: 100%;
         }
 
         /* Filters Section */
@@ -1430,20 +1194,11 @@ const Store = ({ addToCart }) => {
         /* Responsive */
         @media (max-width: 968px) {
           .hero-title {
-            font-size: 2.25rem;
+            font-size: 1.5rem;
           }
 
           .hero-subtitle {
-            font-size: 1.125rem;
-          }
-
-          .hero-stats {
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
-          }
-
-          .featured-grid {
-            grid-template-columns: 1fr;
+            font-size: 0.9rem;
           }
 
           .filters-header {
@@ -1476,11 +1231,15 @@ const Store = ({ addToCart }) => {
 
         @media (max-width: 640px) {
           .store-hero {
-            padding: 4rem 0 3rem;
+            padding: 5rem 0 1.25rem;
           }
 
-          .hero-stats {
-            grid-template-columns: 1fr;
+          .hero-title {
+            font-size: 1.35rem;
+          }
+
+          .hero-subtitle {
+            font-size: 0.85rem;
           }
 
           .products-grid {
