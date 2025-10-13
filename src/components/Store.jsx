@@ -324,13 +324,6 @@ const Store = ({ addToCart }) => {
               Clear All Filters
             </button>
           </div>
-
-          {/* Results Info */}
-          <div className="results-info">
-            <p>
-              Showing <strong>{startIndex + 1}-{Math.min(startIndex + productsPerPage, filteredProducts.length)}</strong> of <strong>{filteredProducts.length}</strong> products
-            </p>
-          </div>
         </div>
       </section>
 
@@ -380,11 +373,6 @@ const Store = ({ addToCart }) => {
                       <div className="product-badge featured">Featured</div>
                     )}
                     <div className="product-category-badge">{product.category}</div>
-                    {product.inStock ? (
-                      <div className="stock-badge in-stock">In Stock</div>
-                    ) : (
-                      <div className="stock-badge out-of-stock">Out of Stock</div>
-                    )}
                   </div>
                   
                   <div className="product-info">
@@ -553,7 +541,7 @@ const Store = ({ addToCart }) => {
         .store-filters {
           background: white;
           border-bottom: 2px solid var(--neutral-200);
-          padding: 2rem 0;
+          padding: 0.5rem 0;
           position: sticky;
           top: 0;
           z-index: 100;
@@ -564,7 +552,7 @@ const Store = ({ addToCart }) => {
           display: flex;
           gap: 1rem;
           align-items: center;
-          margin-bottom: 1.5rem;
+          margin-bottom: 0;
         }
 
         .search-box {
@@ -575,7 +563,7 @@ const Store = ({ addToCart }) => {
 
         .search-box svg {
           position: absolute;
-          left: 1rem;
+          left: 0.75rem;
           top: 50%;
           transform: translateY(-50%);
           color: var(--neutral-400);
@@ -584,10 +572,10 @@ const Store = ({ addToCart }) => {
 
         .search-box input {
           width: 100%;
-          padding: 1rem 3rem 1rem 3rem;
+          padding: 0.75rem 2.5rem 0.75rem 2.5rem;
           border: 2px solid var(--neutral-300);
-          border-radius: 0.75rem;
-          font-size: 1rem;
+          border-radius: 0.5rem;
+          font-size: 0.95rem;
           transition: all var(--transition-normal);
         }
 
@@ -599,7 +587,7 @@ const Store = ({ addToCart }) => {
 
         .clear-search {
           position: absolute;
-          right: 1rem;
+          right: 0.75rem;
           top: 50%;
           transform: translateY(-50%);
           background: none;
@@ -621,12 +609,14 @@ const Store = ({ addToCart }) => {
           display: flex;
           align-items: center;
           gap: 0.5rem;
-          padding: 1rem 1.5rem;
-          background: var(--neutral-100);
+          padding: 0.75rem 1rem;
+          background: white;
           border: 2px solid var(--neutral-300);
-          border-radius: 0.75rem;
+          border-radius: 0.5rem;
           cursor: pointer;
-          font-weight: 600;
+          font-size: 0.9rem;
+          font-weight: 500;
+          color: var(--neutral-700);
           transition: all var(--transition-normal);
         }
 
@@ -641,11 +631,11 @@ const Store = ({ addToCart }) => {
         .filter-panel {
           display: grid;
           grid-template-columns: 2fr 1fr 1fr auto;
-          gap: 2rem;
-          padding: 1.5rem;
+          gap: 1.5rem;
+          padding: 1rem;
           background: var(--neutral-50);
-          border-radius: 0.75rem;
-          margin-bottom: 1.5rem;
+          border-radius: 0.5rem;
+          margin-bottom: 1rem;
           max-height: 0;
           overflow: hidden;
           opacity: 0;
@@ -735,12 +725,13 @@ const Store = ({ addToCart }) => {
           display: flex;
           align-items: center;
           gap: 0.5rem;
-          padding: 0.75rem 1.25rem;
+          padding: 0.6rem 1rem;
           background: white;
           border: 2px solid var(--neutral-300);
           border-radius: 0.5rem;
           cursor: pointer;
           font-weight: 600;
+          font-size: 0.9rem;
           color: var(--neutral-700);
           transition: all var(--transition-normal);
           align-self: flex-end;
@@ -750,24 +741,6 @@ const Store = ({ addToCart }) => {
           background: var(--error);
           color: white;
           border-color: var(--error);
-        }
-
-        .results-info {
-          padding: 0.75rem 1rem;
-          background: var(--light-blue);
-          border-radius: 0.5rem;
-          text-align: center;
-        }
-
-        .results-info p {
-          margin: 0;
-          color: var(--neutral-700);
-          font-size: 0.95rem;
-        }
-
-        .results-info strong {
-          color: var(--primary-blue);
-          font-weight: 600;
         }
 
         /* Products Section */
@@ -868,6 +841,10 @@ const Store = ({ addToCart }) => {
           border-radius: 999px;
           font-size: 0.75rem;
           font-weight: 600;
+          line-height: 1;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
         }
 
         .stock-badge {
@@ -879,6 +856,10 @@ const Store = ({ addToCart }) => {
           font-size: 0.75rem;
           font-weight: 600;
           color: white;
+          line-height: 1;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
         }
 
         .stock-badge.in-stock {

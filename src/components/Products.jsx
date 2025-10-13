@@ -164,19 +164,30 @@ const Products = ({ addToCart }) => {
                       <span className="product-emoji">{val}</span>
                     );
                   })()}
-                  <div className="product-category">{product.category}</div>
-                  {product.inStock && <div className="stock-badge">In Stock</div>}
+                  
+                  {product.featured && (
+                    <div className="product-badge featured">Featured</div>
+                  )}
+                  <div className="product-category-badge">{product.category}</div>
                 </div>
                 
                 <div className="product-info">
                   <h3 className="product-name">{product.name}</h3>
+                  
+                  {product.rating && (
+                    <div className="product-rating">
+                      <span>⭐</span>
+                      <span>{product.rating}</span>
+                      <span className="rating-count">(24 reviews)</span>
+                    </div>
+                  )}
+                  
                   <p className="product-description">{product.description}</p>
                   
-                  {/* ratings removed */}
-                  
                   <div className="product-footer">
-                    <div className="product-price">
-                      ${product.price}
+                    <div className="price-section">
+                      <span className="product-price">${typeof product.price === 'number' ? product.price.toFixed(2) : product.price}</span>
+                      <span className="price-unit">per unit</span>
                     </div>
                     <button
                       className="btn btn-primary add-to-cart-btn"
@@ -275,60 +286,130 @@ const Products = ({ addToCart }) => {
           filter: drop-shadow(0 8px 16px rgba(0,0,0,0.08));
         }
 
-        .product-category {
+        .product-badge {
           position: absolute;
-          top: 1rem;
-          right: 1rem;
+          top: 0.75rem;
+          left: 0.75rem;
+          padding: 0.35rem 0.75rem;
+          border-radius: 999px;
+          font-size: 0.75rem;
+          font-weight: 600;
+          color: white;
+          line-height: 1;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .product-badge.featured {
+          background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+
+        .product-category-badge {
+          position: absolute;
+          top: 0.75rem;
+          right: 0.75rem;
           background: var(--primary-blue);
           color: white;
-          padding: 0.25rem 0.75rem;
-          border-radius: 1rem;
-          font-size: 0.8rem;
-          font-weight: 500;
+          padding: 0.35rem 0.75rem;
+          border-radius: 999px;
+          font-size: 0.75rem;
+          font-weight: 600;
+          line-height: 1;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
         }
 
         .stock-badge {
           position: absolute;
-          top: 1rem;
-          left: 1rem;
-          background: var(--success);
+          bottom: 0.75rem;
+          left: 0.75rem;
+          padding: 0.35rem 0.75rem;
+          border-radius: 999px;
+          font-size: 0.75rem;
+          font-weight: 600;
           color: white;
-          padding: 0.25rem 0.75rem;
-          border-radius: 1rem;
-          font-size: 0.8rem;
-          font-weight: 500;
+          line-height: 1;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .stock-badge.in-stock {
+          background: var(--success);
+        }
+
+        .stock-badge.out-of-stock {
+          background: var(--error);
         }
 
         .product-info {
           padding: 1.5rem;
+          display: flex;
+          flex-direction: column;
+          flex: 1;
         }
 
         .product-name {
           color: var(--neutral-900);
           font-size: 1.25rem;
           margin-bottom: 0.5rem;
+          font-weight: 600;
+          line-height: 1.3;
+        }
+
+        .product-rating {
+          display: flex;
+          align-items: center;
+          gap: 0.35rem;
+          margin-bottom: 0.75rem;
+          color: #FFA500;
+          font-size: 0.9rem;
+        }
+
+        .rating-count {
+          color: var(--neutral-500);
+          font-size: 0.85rem;
         }
 
         .product-description {
           color: var(--neutral-600);
           font-size: 0.9rem;
-          margin-bottom: 1rem;
-          line-height: 1.5;
+          margin-bottom: 1.5rem;
+          line-height: 1.6;
+          display: -webkit-box;
+          -webkit-line-clamp: 3;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+          flex: 1;
         }
-
-  /* ratings styles removed */
 
         .product-footer {
           display: flex;
           align-items: center;
           justify-content: space-between;
           gap: 1rem;
+          padding-top: 1rem;
+          border-top: 1px solid var(--neutral-200);
+        }
+
+        .price-section {
+          display: flex;
+          flex-direction: column;
         }
 
         .product-price {
           font-size: 1.5rem;
           font-weight: 700;
           color: var(--primary-blue);
+          line-height: 1;
+        }
+
+        .price-unit {
+          font-size: 0.75rem;
+          color: var(--neutral-500);
+          margin-top: 0.25rem;
         }
 
         .add-to-cart-btn {
