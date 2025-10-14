@@ -1,5 +1,5 @@
 // MySQL client initialization for frontend API calls
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001/api';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://13.54.20.163:3000/api';
 
 export const mysqlEnabled = Boolean(API_BASE_URL);
 
@@ -7,6 +7,7 @@ export const mysqlEnabled = Boolean(API_BASE_URL);
 class MySQLClient {
   constructor(baseURL) {
     this.baseURL = baseURL;
+    console.log('MySQL Client initialized with base URL:', baseURL);
   }
 
   async request(endpoint, options = {}) {
@@ -20,6 +21,7 @@ class MySQLClient {
     };
 
     try {
+      console.log(`Making request to: ${url}`);
       const response = await fetch(url, config);
       const data = await response.json();
       
@@ -27,6 +29,7 @@ class MySQLClient {
         throw new Error(data.error || `HTTP ${response.status}`);
       }
       
+      console.log(`Success:`, data);
       return { data, error: null };
     } catch (error) {
       console.error(`MySQL API Error (${endpoint}):`, error);
