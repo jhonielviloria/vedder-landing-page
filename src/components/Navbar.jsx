@@ -38,17 +38,20 @@ const Navbar = ({ cartItemCount, onCartToggle }) => {
             <button onClick={() => scrollToSection('home')} className="nav-link" role="menuitem">
               Home
             </button>
+            <button onClick={() => scrollToSection('services')} className="nav-link" role="menuitem">
+              Services
+            </button>
             <button onClick={() => scrollToSection('bins')} className="nav-link" role="menuitem">
               Our Bins
             </button>
             <button onClick={() => scrollToSection('products')} className="nav-link" role="menuitem">
               Products
             </button>
-            <button onClick={() => scrollToSection('services')} className="nav-link" role="menuitem">
-              Services
-            </button>
             <button onClick={() => scrollToSection('about')} className="nav-link" role="menuitem">
               About
+            </button>
+            <button onClick={() => scrollToSection('partners')} className="nav-link" role="menuitem">
+              Partners
             </button>
             <button onClick={() => scrollToSection('blog')} className="nav-link" role="menuitem">
               Resources
@@ -82,17 +85,20 @@ const Navbar = ({ cartItemCount, onCartToggle }) => {
             <button onClick={() => scrollToSection('home')} className="mobile-nav-link">
               Home
             </button>
+            <button onClick={() => scrollToSection('services')} className="mobile-nav-link">
+              Services
+            </button>
             <button onClick={() => scrollToSection('bins')} className="mobile-nav-link">
               Our Bins
             </button>
             <button onClick={() => scrollToSection('products')} className="mobile-nav-link">
               Products
             </button>
-            <button onClick={() => scrollToSection('services')} className="mobile-nav-link">
-              Services
-            </button>
             <button onClick={() => scrollToSection('about')} className="mobile-nav-link">
               About
+            </button>
+            <button onClick={() => scrollToSection('partners')} className="mobile-nav-link">
+              Partners
             </button>
             <button onClick={() => scrollToSection('blog')} className="mobile-nav-link">
               Resources
