@@ -17,8 +17,8 @@ const Hero = () => {
           {/* Left: Heading and CTAs */}
           <div className="hero-left">
             <div className="hero-badge" aria-label="badge" style={{ animation: 'fadeIn 0.6s ease-out' }}>
-              <Sparkles size={16} />
-              Professional Sanitary Solutions
+              {/* <Sparkles size={16} /> */}
+              Fresh bins. Every visit. Every time.
             </div>
 
             <h1 className="hero-title" style={{ animation: 'fadeInUp 0.8s ease-out 0.2s backwards' }}>
