@@ -8,33 +8,23 @@ const Bins = () => {
   const bins = [
     {
       id: 1,
-      name: 'Feminine Hygiene Bin',
+      name: 'Sanitary Bin',
       image: '🗑️'
     },
     {
       id: 2,
-      name: 'Baby Changing Bin',
-      image: '👶'
+      name: 'Sensor Bin',
+      image: '�'
     },
     {
       id: 3,
-      name: 'General Washroom Bin',
-      image: '🚽'
+      name: 'Nappy Bin',
+      image: '�'
     },
     {
       id: 4,
       name: 'Medical Waste Bin',
       image: '🏥'
-    },
-    {
-      id: 5,
-      name: 'High-Capacity Office Bin',
-      image: '🏢'
-    },
-    {
-      id: 6,
-      name: 'Compact Powder Room Bin',
-      image: '🚿'
     }
   ];
 
